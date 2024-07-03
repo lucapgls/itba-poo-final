@@ -85,4 +85,14 @@ public class CanvasState {
         }
     }
 
+    public void updateStroke(String shadow) {
+        for (DrawableFigure<?extends Figure> figure : figures()) {
+            if (selectedList.contains(figure)) {
+                figure.updateStroke(shadow);
+            }
+        }
+    }
+
+
+
 }

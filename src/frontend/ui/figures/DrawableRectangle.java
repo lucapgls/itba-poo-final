@@ -9,20 +9,19 @@ import javafx.scene.paint.Stop;
 
 public class DrawableRectangle<R extends Rectangle> extends DrawableFigure<R> {
 
-        public DrawableRectangle(R figure, Color color, Color secondColor, String shadow) {
-            super(figure, color, secondColor, shadow);
+        public DrawableRectangle(R figure, Color color, Color secondColor, String shadow, String stroke) {
+            super(figure, color, secondColor, shadow, stroke);
         }
 
         @Override
         public void handleSelection(GraphicsContext gc) {
-
-            shadowHandler(gc);
+            R rectangle = getFigure();
+            shadowHandler(rectangle, gc);
+            strokeHandler(rectangle, gc);
             super.handleSelection(gc);
         }
 
-        private void shadowHandler(GraphicsContext gc){
-            R rectangle = getFigure();
-
+        private void shadowHandler(R rectangle, GraphicsContext gc){
 
             if(getShadow().equals("Simple")){
                 gc.setFill(Color.GRAY);
@@ -40,6 +39,16 @@ public class DrawableRectangle<R extends Rectangle> extends DrawableFigure<R> {
                 gc.setFill(getColor().darker());
                 gc.fillRect(rectangle.getTopLeft().getX() - 10, rectangle.getTopLeft().getY() - 10,
                         Math.abs(rectangle.getTopLeft().getX() - rectangle.getBottomRight().getX()), Math.abs(rectangle.getTopLeft().getY() - rectangle.getBottomRight().getY()));
+            }
+        }
+
+        private void strokeHandler(R rectangle, GraphicsContext gc){
+            if(getStroke().equals("Simple")) {
+                gc.setLineWidth(1);
+            } else if(getStroke().equals("Punteado Simple")){
+              gc.setLineDashes(10);
+            } else if(getStroke().equals("Punteado Complejo")){
+              gc.setLineDashes(30, 10, 15, 10);
             }
         }
 

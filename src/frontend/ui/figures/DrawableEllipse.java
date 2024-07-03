@@ -10,17 +10,18 @@ import javafx.scene.paint.Stop;
 public class DrawableEllipse<E extends Ellipse> extends DrawableFigure<E> {
 
 
-    public DrawableEllipse(E figure, Color color, Color secondColor, String shadow) { super(figure, color,secondColor ,shadow); }
+    public DrawableEllipse(E figure, Color color, Color secondColor, String shadow, String stroke) { super(figure, color,secondColor ,shadow, stroke); }
 
     @Override
     public void handleSelection(GraphicsContext gc) {
 
-        shadowHandler(gc);
+        E ellipse = getFigure();
+        shadowHandler(ellipse, gc);
+        strokeHandler(ellipse, gc);
         super.handleSelection(gc);
     }
 
-    private void shadowHandler(GraphicsContext gc){
-        E ellipse = getFigure();
+    private void shadowHandler(E ellipse, GraphicsContext gc){
 
         if(getShadow().equals("Simple")){
             gc.setFill(Color.GRAY);
@@ -46,6 +47,16 @@ public class DrawableEllipse<E extends Ellipse> extends DrawableFigure<E> {
                     ellipse.getCenterPoint().getY() - 10 - (ellipse.getsMinorAxis() / 2),
                     ellipse.getsMayorAxis(),
                     ellipse.getsMinorAxis());
+        }
+    }
+
+    private void strokeHandler(E ellipse, GraphicsContext gc){
+        if(getStroke().equals("Simple")) {
+            gc.setLineWidth(1);
+        } else if(getStroke().equals("Punteado Simple")){
+            gc.setLineDashes(10);
+        } else if(getStroke().equals("Punteado Complejo")){
+            gc.setLineDashes(30, 10, 15, 10);
         }
     }
 

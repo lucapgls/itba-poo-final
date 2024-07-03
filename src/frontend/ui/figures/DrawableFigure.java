@@ -12,15 +12,18 @@ public abstract class DrawableFigure<F extends Figure> {
     private static final Color SELECTED_COLOR = Color.RED;
     private static final Color LINE_COLOR = Color.BLACK;
 
+
     private Color figureColor;
     private Color secondFigureColor;
     private String shadow;
+    private String stroke;
 
-    public DrawableFigure(F figure, Color figureColor, Color secondFigureColor, String shadow) {
+    public DrawableFigure(F figure, Color figureColor, Color secondFigureColor, String shadow, String stroke) {
         this.figure = figure;
         this.figureColor = figureColor;
         this.shadow = shadow;
         this.secondFigureColor = secondFigureColor;
+        this.stroke = stroke;
     }
 
     public F getFigure() {
@@ -50,9 +53,13 @@ public abstract class DrawableFigure<F extends Figure> {
 
     public void updateShadow(String shadow){ this.shadow = shadow; }
 
+    public void updateStroke(String stroke){ this.stroke = stroke; }
+
     public String getShadow(){
         return shadow;
     }
+
+    public String getStroke(){ return stroke;}
 
 
     public void handleSelection(GraphicsContext gc) {

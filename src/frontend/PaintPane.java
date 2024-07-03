@@ -169,6 +169,10 @@ public class PaintPane extends BorderPane {
             redrawCanvas();
         });
 
+        sideBar.getStrokeButton().setOnAction(event -> {
+            canvasState.updateStroke(sideBar.getStrokeButton().getValue().toString());
+            redrawCanvas();
+        });
 
         setLeft(sideBar);
         setRight(canvas);
