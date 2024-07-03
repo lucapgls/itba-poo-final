@@ -1,25 +1,20 @@
 package backend.model;
 
-public class Square implements Figure {
+public class Square extends Rectangle {
 
-    private final Point topLeft, bottomRight;
 
-    public Square(Point topLeft, double size) {
-        this.topLeft = topLeft;
-        this.bottomRight = new Point(topLeft.x + size, topLeft.y + size);
-    }
-
-    public Point getTopLeft() {
-        return topLeft;
-    }
-
-    public Point getBottomRight() {
-        return bottomRight;
+    public Square(Point topLeft, double size){
+        super(topLeft, new Point(topLeft.getX() + size, topLeft.getY() + size));
     }
 
     @Override
     public String toString() {
-        return String.format("Cuadrado [ %s , %s ]", topLeft, bottomRight);
+        return String.format("Cuadrado [ %s , %s ]", getTopLeft(), getBottomRight());
     }
 
+
+    @Override
+    public boolean isContained(Rectangle selectionRect) {
+        return super.isContained(selectionRect);
+    }
 }
