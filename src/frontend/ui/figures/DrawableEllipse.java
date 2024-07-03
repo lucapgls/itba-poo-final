@@ -3,11 +3,14 @@ package frontend.ui.figures;
 import backend.model.Ellipse;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.RadialGradient;
+import javafx.scene.paint.Stop;
 
 public class DrawableEllipse<E extends Ellipse> extends DrawableFigure<E> {
 
 
-    public DrawableEllipse(E figure, Color color, String shadow) { super(figure, color,shadow); }
+    public DrawableEllipse(E figure, Color color, Color secondColor, String shadow) { super(figure, color,secondColor ,shadow); }
 
     @Override
     public void handleSelection(GraphicsContext gc) {
@@ -49,10 +52,16 @@ public class DrawableEllipse<E extends Ellipse> extends DrawableFigure<E> {
     @Override
     public void draw(GraphicsContext gc) {
 
+        RadialGradient radialGradient = new RadialGradient(0, 0, 0.5, 0.5, 0.5, true,
+                CycleMethod.NO_CYCLE,new Stop(0, getColor()),
+                new Stop(1, getSecondColor()));
+
+
+
         E ellipse = getFigure();
 
         handleSelection(gc);
-
+        gc.setFill(radialGradient);
         gc.fillOval(ellipse.getCenterPoint().getX() - (ellipse.getsMayorAxis() / 2),
                     ellipse.getCenterPoint().getY() - (ellipse.getsMinorAxis() / 2),
                     ellipse.getsMayorAxis(),

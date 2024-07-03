@@ -45,10 +45,14 @@ public class CanvasState {
         selectedList.add(figure);
     }
 
-    public void updateSelectedFigures(Color color) {
+    public void updateSelectedFigures(Color color, boolean isPrimaryColor) {
         for (DrawableFigure<?extends Figure> figure : figures()){
             if (selectedList.contains(figure)) {
-                figure.changeColor(color);
+                if (isPrimaryColor)
+                    figure.changeColor(color);
+                else
+                    figure.changeSecondColor(color);
+
             }
         }
     }

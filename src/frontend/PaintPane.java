@@ -155,7 +155,12 @@ public class PaintPane extends BorderPane {
         });
 
         sideBar.getColorPickerButton().setOnAction(event -> {
-            canvasState.updateSelectedFigures(sideBar.getColorPicker());
+            canvasState.updateSelectedFigures(sideBar.getColorPicker(), true);
+            redrawCanvas();
+        });
+
+        sideBar.getSecondaryColorPickerButton().setOnAction(event -> {
+            canvasState.updateSelectedFigures(sideBar.getSecondaryColorPicker() , false);
             redrawCanvas();
         });
 
