@@ -16,14 +16,16 @@ public abstract class DrawableFigure<F extends Figure> {
     private Color figureColor;
     private Color secondFigureColor;
     private String shadow;
-    private String stroke;
+    private Double strokeThickness;
+    private String strokeStyle;
 
-    public DrawableFigure(F figure, Color figureColor, Color secondFigureColor, String shadow, String stroke) {
+    public DrawableFigure(F figure, Color figureColor, Color secondFigureColor, String shadow, Double strokeThickness, String stroke) {
         this.figure = figure;
         this.figureColor = figureColor;
         this.shadow = shadow;
         this.secondFigureColor = secondFigureColor;
-        this.stroke = stroke;
+        this.strokeThickness = strokeThickness;
+        this.strokeStyle = stroke;
     }
 
     public F getFigure() {
@@ -53,13 +55,17 @@ public abstract class DrawableFigure<F extends Figure> {
 
     public void updateShadow(String shadow){ this.shadow = shadow; }
 
-    public void updateStroke(String stroke){ this.stroke = stroke; }
+    public void updateStrokeStyle(String stroke){ this.strokeStyle = stroke; }
+
+    public void updateStrokeThickness(Double thickness){ this.strokeThickness = thickness; }
 
     public String getShadow(){
         return shadow;
     }
 
-    public String getStroke(){ return stroke;}
+    public String getStrokeStyle(){ return strokeStyle;}
+
+    public Double getStrokeThickness(){ return strokeThickness; }
 
 
     public void handleSelection(GraphicsContext gc) {

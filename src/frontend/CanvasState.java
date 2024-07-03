@@ -9,7 +9,6 @@ import frontend.ui.figures.DrawableFigure;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -85,10 +84,18 @@ public class CanvasState {
         }
     }
 
-    public void updateStroke(String shadow) {
+    public void updateStrokeStyle(String strokeStyle) {
         for (DrawableFigure<?extends Figure> figure : figures()) {
             if (selectedList.contains(figure)) {
-                figure.updateStroke(shadow);
+                figure.updateStrokeStyle(strokeStyle);
+            }
+        }
+    }
+
+    public void updateStrokeThickness(Double thickness) {
+        for (DrawableFigure<?extends Figure> figure : figures()) {
+            if (selectedList.contains(figure)) {
+                figure.updateStrokeThickness(thickness);
             }
         }
     }

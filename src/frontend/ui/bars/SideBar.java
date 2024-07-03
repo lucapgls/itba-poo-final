@@ -26,7 +26,7 @@ public class SideBar extends VBox {
 
     private final ChoiceBox shadowButton = new ShadowButton();
     private final ChoiceBox strokeButton = new StrokeButton();
-
+    private final Slider strokeSlider = new StrokeSlider();
 
     //Labels
     Label shadowLabel = new Label("Sombra");
@@ -60,6 +60,7 @@ public class SideBar extends VBox {
         getChildren().add(secondaryColorPicker);
         fillLabel.setStyle("-fx-text-fill: white;");
         getChildren().add(strokeLabel);
+        getChildren().add(strokeSlider);
         getChildren().add(strokeButton);
         setPadding(new Insets(5));
         setStyle("-fx-background-color: #282828");
@@ -69,24 +70,24 @@ public class SideBar extends VBox {
 
     private ToggleButton[] getToggleButtons(CanvasState canvasState) {
         FigureButton<Rectangle> rectangleButton = new FigureButton<>("Rectángulo", canvasState,
-                (start, end) -> new DrawableRectangle<>(new Rectangle(start, end),fillColorPicker.getValue(), secondaryColorPicker.getValue(), shadowButton.getValue().toString(), strokeButton.getValue().toString())
+                (start, end) -> new DrawableRectangle<>(new Rectangle(start, end),fillColorPicker.getValue(), secondaryColorPicker.getValue(), shadowButton.getValue().toString(), strokeSlider.getValue(),strokeButton.getValue().toString())
         );
 
         FigureButton<Ellipse> ellipseButton = new FigureButton<>("Elipse", canvasState,
                 (start, end) -> new DrawableEllipse<>(new Ellipse(
                     new Point(Math.abs(end.getX() + start.getX()) / 2, (Math.abs((end.getY() + start.getY())) / 2)),
                     Math.abs(end.getX() - start.getX()),
-                    Math.abs(end.getY() - start.getY())), fillColorPicker.getValue(), secondaryColorPicker.getValue(), shadowButton.getValue().toString(), strokeButton.getValue().toString())
+                    Math.abs(end.getY() - start.getY())), fillColorPicker.getValue(), secondaryColorPicker.getValue(), shadowButton.getValue().toString(), strokeSlider.getValue(),strokeButton.getValue().toString())
         );
 
         FigureButton<Square> squareButton = new FigureButton<>("Cuadrado", canvasState,
                 (start, end) -> new DrawableRectangle<>(new Square(start, end.getX() - start.getX()),
-                fillColorPicker.getValue(), secondaryColorPicker.getValue(), shadowButton.getValue().toString(), strokeButton.getValue().toString())
+                fillColorPicker.getValue(), secondaryColorPicker.getValue(), shadowButton.getValue().toString(), strokeSlider.getValue(), strokeButton.getValue().toString())
         );
 
         FigureButton<Circle> circleButton = new FigureButton<>("Círculo", canvasState,
                 (start, end) -> new DrawableEllipse<>(new Circle(start, end.getX() - start.getX()),
-                        fillColorPicker.getValue(), secondaryColorPicker.getValue(), shadowButton.getValue().toString(), strokeButton.getValue().toString())
+                        fillColorPicker.getValue(), secondaryColorPicker.getValue(), shadowButton.getValue().toString(), strokeSlider.getValue(), strokeButton.getValue().toString())
         );
 
         // Other buttons
@@ -100,7 +101,12 @@ public class SideBar extends VBox {
     public ChoiceBox getShadowButton(){
         return this.shadowButton;
     }
-    public ChoiceBox getStrokeButton(){ return this.strokeButton; }
+    public ChoiceBox getStrokeButton(){
+        return this.strokeButton;
+    }
+    public Slider getStrokeSlider(){
+        return this.strokeSlider;
+    }
 
     public ToggleGroup getTools() {
         return tools;

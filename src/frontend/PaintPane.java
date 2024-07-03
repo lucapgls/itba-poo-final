@@ -170,7 +170,12 @@ public class PaintPane extends BorderPane {
         });
 
         sideBar.getStrokeButton().setOnAction(event -> {
-            canvasState.updateStroke(sideBar.getStrokeButton().getValue().toString());
+            canvasState.updateStrokeStyle(sideBar.getStrokeButton().getValue().toString());
+            redrawCanvas();
+        });
+
+        sideBar.getStrokeSlider().setOnMouseReleased(event -> {
+            canvasState.updateStrokeThickness(sideBar.getStrokeSlider().getValue());
             redrawCanvas();
         });
 
