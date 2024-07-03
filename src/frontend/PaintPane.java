@@ -194,7 +194,7 @@ public class PaintPane extends BorderPane {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Alerta");
         alert.setHeaderText(message);
-        alert.setContentText("TPE Final POO Diciembre 2023");
+        alert.setContentText("TPE Final POO Julio 2024");
         alert.showAndWait();
     }
 
