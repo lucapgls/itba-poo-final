@@ -5,13 +5,12 @@ import frontend.CanvasState;
 import frontend.ui.buttons.*;
 import frontend.ui.figures.DrawableEllipse;
 import frontend.ui.figures.DrawableRectangle;
+import frontend.ui.styles.ShadowEnum;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-
-import javax.swing.*;
 
 public class SideBar extends VBox {
 
@@ -24,8 +23,8 @@ public class SideBar extends VBox {
     private final ColorPicker fillColorPicker = new ColorPicker(Color.YELLOW);
     private final ColorPicker secondaryColorPicker = new ColorPicker(Color.ORANGE);
 
-    private final ChoiceBox shadowButton = new ShadowButton();
-    private final ChoiceBox strokeButton = new StrokeButton();
+    private final ChoiceBox<ShadowEnum> shadowButton = new ShadowButton();
+    private final ChoiceBox<String> strokeButton = new StrokeButton();
     private final Slider strokeSlider = new StrokeSlider();
 
     //Labels
@@ -70,24 +69,24 @@ public class SideBar extends VBox {
 
     private ToggleButton[] getToggleButtons(CanvasState canvasState) {
         FigureButton<Rectangle> rectangleButton = new FigureButton<>("Rectángulo", canvasState,
-                (start, end) -> new DrawableRectangle<>(new Rectangle(start, end),fillColorPicker.getValue(), secondaryColorPicker.getValue(), shadowButton.getValue().toString(), strokeSlider.getValue(),strokeButton.getValue().toString())
+                (start, end) -> new DrawableRectangle<>(new Rectangle(start, end),fillColorPicker.getValue(), secondaryColorPicker.getValue(), shadowButton.getValue(), strokeSlider.getValue(),strokeButton.getValue().toString())
         );
 
         FigureButton<Ellipse> ellipseButton = new FigureButton<>("Elipse", canvasState,
                 (start, end) -> new DrawableEllipse<>(new Ellipse(
                     new Point(Math.abs(end.getX() + start.getX()) / 2, (Math.abs((end.getY() + start.getY())) / 2)),
                     Math.abs(end.getX() - start.getX()),
-                    Math.abs(end.getY() - start.getY())), fillColorPicker.getValue(), secondaryColorPicker.getValue(), shadowButton.getValue().toString(), strokeSlider.getValue(),strokeButton.getValue().toString())
+                    Math.abs(end.getY() - start.getY())), fillColorPicker.getValue(), secondaryColorPicker.getValue(), shadowButton.getValue(), strokeSlider.getValue(),strokeButton.getValue().toString())
         );
 
         FigureButton<Square> squareButton = new FigureButton<>("Cuadrado", canvasState,
                 (start, end) -> new DrawableRectangle<>(new Square(start, end.getX() - start.getX()),
-                fillColorPicker.getValue(), secondaryColorPicker.getValue(), shadowButton.getValue().toString(), strokeSlider.getValue(), strokeButton.getValue().toString())
+                fillColorPicker.getValue(), secondaryColorPicker.getValue(), shadowButton.getValue(), strokeSlider.getValue(), strokeButton.getValue())
         );
 
         FigureButton<Circle> circleButton = new FigureButton<>("Círculo", canvasState,
                 (start, end) -> new DrawableEllipse<>(new Circle(start, end.getX() - start.getX()),
-                        fillColorPicker.getValue(), secondaryColorPicker.getValue(), shadowButton.getValue().toString(), strokeSlider.getValue(), strokeButton.getValue().toString())
+                        fillColorPicker.getValue(), secondaryColorPicker.getValue(), shadowButton.getValue(), strokeSlider.getValue(), strokeButton.getValue())
         );
 
         // Other buttons
@@ -98,10 +97,10 @@ public class SideBar extends VBox {
         return toolsArr;
     }
 
-    public ChoiceBox getShadowButton(){
+    public ChoiceBox<ShadowEnum> getShadowButton(){
         return this.shadowButton;
     }
-    public ChoiceBox getStrokeButton(){
+    public ChoiceBox<String> getStrokeButton(){
         return this.strokeButton;
     }
     public Slider getStrokeSlider(){

@@ -171,12 +171,12 @@ public class PaintPane extends BorderPane {
         });
 
         sideBar.getShadowButton().setOnAction(event -> {
-            canvasState.updateShadow(sideBar.getShadowButton().getValue().toString());
+            canvasState.updateShadow(sideBar.getShadowButton().getValue());
             redrawCanvas();
         });
 
         sideBar.getStrokeButton().setOnAction(event -> {
-            canvasState.updateStrokeStyle(sideBar.getStrokeButton().getValue().toString());
+            canvasState.updateStrokeStyle(sideBar.getStrokeButton().getValue());
             redrawCanvas();
         });
 

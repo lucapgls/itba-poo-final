@@ -1,6 +1,7 @@
 package frontend.ui.figures;
 
 import backend.model.Ellipse;
+import frontend.ui.styles.ShadowEnum;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
@@ -10,7 +11,7 @@ import javafx.scene.paint.Stop;
 public class DrawableEllipse<E extends Ellipse> extends DrawableFigure<E> {
 
 
-    public DrawableEllipse(E figure, Color color, Color secondColor, String shadow, Double strokeThickness, String stroke) { super(figure, color,secondColor ,shadow, strokeThickness, stroke); }
+    public DrawableEllipse(E figure, Color color, Color secondColor, ShadowEnum shadow, Double strokeThickness, String stroke) { super(figure, color,secondColor ,shadow, strokeThickness, stroke); }
 
     @Override
     public void handleSelection(GraphicsContext gc) {
@@ -25,28 +26,28 @@ public class DrawableEllipse<E extends Ellipse> extends DrawableFigure<E> {
     private void shadowHandler(E ellipse, GraphicsContext gc){
 
         switch (getShadow()) {
-            case "Simple" -> {
+            case SIMPLE-> {
                 gc.setFill(Color.GRAY);
                 gc.fillOval(ellipse.getCenterPoint().getX() + 10 - (ellipse.getsMayorAxis() / 2),
                         ellipse.getCenterPoint().getY() + 10 - (ellipse.getsMinorAxis() / 2),
                         ellipse.getsMayorAxis(),
                         ellipse.getsMinorAxis());
             }
-            case "Coloreada" -> {
+            case COLORED -> {
                 gc.setFill(getColor().darker());
                 gc.fillOval(ellipse.getCenterPoint().getX() + 10 - (ellipse.getsMayorAxis() / 2),
                         ellipse.getCenterPoint().getY() + 10 - (ellipse.getsMinorAxis() / 2),
                         ellipse.getsMayorAxis(),
                         ellipse.getsMinorAxis());
             }
-            case "Simple Inversa" -> {
+            case INVERSE_SIMPLE -> {
                 gc.setFill(Color.GRAY);
                 gc.fillOval(ellipse.getCenterPoint().getX() - 10 - (ellipse.getsMayorAxis() / 2),
                         ellipse.getCenterPoint().getY() - 10 - (ellipse.getsMinorAxis() / 2),
                         ellipse.getsMayorAxis(),
                         ellipse.getsMinorAxis());
             }
-            case "Coloreada Inversa" -> {
+            case INVERSE_COLORED -> {
                 gc.setFill(getColor().darker());
                 gc.fillOval(ellipse.getCenterPoint().getX() - 10 - (ellipse.getsMayorAxis() / 2),
                         ellipse.getCenterPoint().getY() - 10 - (ellipse.getsMinorAxis() / 2),

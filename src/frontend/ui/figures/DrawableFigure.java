@@ -1,6 +1,7 @@
 package frontend.ui.figures;
 
 import backend.model.Figure;
+import frontend.ui.styles.ShadowEnum;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -15,11 +16,11 @@ public abstract class DrawableFigure<F extends Figure> {
 
     private Color figureColor;
     private Color secondFigureColor;
-    private String shadow;
+    private ShadowEnum shadow;
     private Double strokeThickness;
     private String strokeStyle;
 
-    public DrawableFigure(F figure, Color figureColor, Color secondFigureColor, String shadow, Double strokeThickness, String stroke) {
+    public DrawableFigure(F figure, Color figureColor, Color secondFigureColor, ShadowEnum shadow, Double strokeThickness, String stroke) {
         this.figure = figure;
         this.figureColor = figureColor;
         this.shadow = shadow;
@@ -53,13 +54,14 @@ public abstract class DrawableFigure<F extends Figure> {
          this.secondFigureColor = color;
     }
 
-    public void updateShadow(String shadow){ this.shadow = shadow; }
+
+    public void updateShadow(ShadowEnum shadow){ this.shadow = shadow; }
 
     public void updateStrokeStyle(String stroke){ this.strokeStyle = stroke; }
 
     public void updateStrokeThickness(Double thickness){ this.strokeThickness = thickness; }
 
-    public String getShadow(){
+    public ShadowEnum getShadow(){
         return shadow;
     }
 
