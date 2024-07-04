@@ -35,4 +35,9 @@ public class Rectangle extends Figure {
         return selectionRect.isReachable(this.getTopLeft())
                 && selectionRect.isReachable(this.getBottomRight());
     }
+
+
+    public Rectangle duplicate() {
+        return new Rectangle(new Point(topLeft.getX() + 10, topLeft.getY() + 10), new Point(bottomRight.getX() + 10, bottomRight.getY() + 10));
+    }
 }

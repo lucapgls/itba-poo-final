@@ -16,4 +16,6 @@ public abstract class Figure implements Movable, Reachable {
         }
     }
 
+    //public abstract Figure duplicate();
+
 }

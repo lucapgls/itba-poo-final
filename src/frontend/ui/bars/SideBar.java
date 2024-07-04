@@ -22,6 +22,7 @@ public class SideBar extends VBox {
     private final CanvasState canvasState;
 
     private ToggleGroup tools = new ToggleGroup();
+    private ToggleGroup actions = new ToggleGroup();
 
     private final ColorPicker fillColorPicker = new ColorPicker(Color.YELLOW);
     private final ColorPicker secondaryColorPicker = new ColorPicker(Color.ORANGE);
@@ -54,7 +55,7 @@ public class SideBar extends VBox {
         ToggleButton[] actionsArr = getActionsButtons(canvasState);
         for (ToggleButton tool : actionsArr) {
             tool.setMinWidth(90);
-            tool.setToggleGroup(tools);
+            tool.setToggleGroup(actions);
             tool.setCursor(Cursor.HAND);
         }
 
@@ -69,11 +70,20 @@ public class SideBar extends VBox {
         fillLabel.setStyle("-fx-text-fill: white;");
         getChildren().add(strokeLabel);
         getChildren().add(strokeSlider);
-        getChildren().add(strokeButton);fillLabel.setStyle("-fx-text-fill: white;");getChildren().add(actionsLabel); getChildren().addAll(actionsArr);
+        getChildren().add(strokeButton);
+        fillLabel.setStyle("-fx-text-fill: white;");
+        getChildren().add(actionsLabel);
+        getChildren().addAll(actionsArr);
         setPadding(new Insets(5));
         setStyle("-fx-background-color: #282828");
         setPrefWidth(100);
 
+    }
+
+    private ToggleButton[] getActionsButtons(CanvasState canvasState){
+        DuplicateButton duplicateButton = new DuplicateButton(canvasState);
+        ToggleButton[] actionsArr = {duplicateButton};
+        return actionsArr;
     }
 
     private ToggleButton[] getToggleButtons(CanvasState canvasState) {
@@ -120,6 +130,11 @@ public class SideBar extends VBox {
         return tools;
     }
 
+    public ToggleGroup getActions(){
+        return actions;
+    }
+
+
     public Color getColorPicker() {
         return fillColorPicker.getValue();
     }
@@ -136,5 +151,9 @@ public class SideBar extends VBox {
 
     public ToggleButton getDeleteButton() {
         return deleteButton;
+    }
+
+    public ToggleButton getDuplicateButton() {
+        return (ToggleButton) actions.getToggles().getFirst();
     }
     }

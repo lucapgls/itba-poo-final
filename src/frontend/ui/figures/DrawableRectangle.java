@@ -1,5 +1,6 @@
 package frontend.ui.figures;
 
+import backend.model.Figure;
 import backend.model.Rectangle;
 import frontend.ui.styles.ShadowEnum;
 import frontend.ui.styles.StrokeStyleEnum;
@@ -62,6 +63,11 @@ public class DrawableRectangle<R extends Rectangle> extends DrawableFigure<R> {
 
         }
 
+        @Override
+        public DrawableFigure<? extends Figure> duplicateFigure(){
+            R newRectangle = getFigure();
+            return new DrawableRectangle<>(newRectangle.duplicate(), getColor(), getSecondColor(), getShadow(), getStrokeThickness(), getStrokeStyle());
+        }
 
         @Override
         public void draw(GraphicsContext gc) {

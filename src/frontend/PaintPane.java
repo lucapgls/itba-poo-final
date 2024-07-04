@@ -1,28 +1,16 @@
 package frontend;
 
-import frontend.CanvasState;
 import backend.model.*;
-import frontend.ui.MouseActions;
 import frontend.ui.bars.SideBar;
 import frontend.ui.buttons.ActionButton;
-import frontend.ui.buttons.FigureButton;
 import frontend.ui.figures.DrawableFigure;
-import javafx.geometry.Insets;
-import javafx.scene.Cursor;
+
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class PaintPane extends BorderPane {
 
@@ -40,16 +28,16 @@ public class PaintPane extends BorderPane {
 
 
     // StatusBar
-    private final StatusPane statusPane;
+    //private final StatusPane statusPane;
 
     // Colores de relleno de cada figura
-    private final Map<DrawableFigure, Color> figureColorMap = new HashMap<>();
+   // private final Map<DrawableFigure, Color> figureColorMap = new HashMap<>();
 
-    private SideBar sideBar;
+    private final SideBar sideBar;
 
     public PaintPane(CanvasState canvasState, StatusPane statusPane) {
         this.canvasState = canvasState;
-        this.statusPane = statusPane;
+      //  this.statusPane = statusPane;
 
         sideBar = new SideBar(canvasState);
 
@@ -82,6 +70,10 @@ public class PaintPane extends BorderPane {
             if (button != null) {
                 button.onMouseReleased(endPoint);
             }
+            ActionButton actionButton = (ActionButton) sideBar.getActions().getSelectedToggle();
+            if (actionButton != null) {
+                actionButton.onMouseReleased(endPoint);
+            }
 
             redrawCanvas();
         });
@@ -109,8 +101,8 @@ public class PaintPane extends BorderPane {
         canvas.setOnMouseClicked(event -> {
 
             Point eventPoint = new Point(event.getX(), event.getY());
-            boolean found = false;
-            StringBuilder label = new StringBuilder("Se seleccionó: ");
+            //boolean found = false;
+            //StringBuilder label = new StringBuilder("Se seleccionó: ");
 
             // Clicked but moved
             if (startPoint.getX() != eventPoint.getX() && startPoint.getY() != eventPoint.getY()) {
@@ -160,6 +152,20 @@ public class PaintPane extends BorderPane {
                 redrawCanvas();
         });
 
+        sideBar.getDuplicateButton().setOnAction(event -> {
+            if(canvasState.noSelection()) {
+                alertInfo("No hay figuras seleccionadas");
+                return;
+            }
+
+            DrawableFigure<? extends Figure> selectedFigure = canvasState.getSelectedFigure();
+            if (selectedFigure != null) {
+                DrawableFigure<? extends Figure> newFigure = selectedFigure.duplicateFigure();
+                canvasState.addFigure(newFigure);
+            }
+            redrawCanvas();
+        });
+
         sideBar.getColorPickerButton().setOnAction(event -> {
             canvasState.updateSelectedFigures(sideBar.getColorPicker(), true);
             redrawCanvas();
@@ -184,6 +190,8 @@ public class PaintPane extends BorderPane {
             canvasState.updateStrokeThickness(sideBar.getStrokeSlider().getValue());
             redrawCanvas();
         });
+
+
 
         setLeft(sideBar);
         setRight(canvas);

@@ -1,6 +1,7 @@
 package frontend.ui.figures;
 
 import backend.model.Ellipse;
+import backend.model.Figure;
 import frontend.ui.styles.ShadowEnum;
 import frontend.ui.styles.StrokeStyleEnum;
 import javafx.scene.canvas.GraphicsContext;
@@ -62,9 +63,14 @@ public class DrawableEllipse<E extends Ellipse> extends DrawableFigure<E> {
         gc.setLineWidth(getStrokeThickness());
     }
 
-    private void strokeStyleHandler(GraphicsContext gc){
-        getStrokeStyle().applyStrokeStyle(gc);
+
+    @Override
+    public DrawableFigure<? extends Figure> duplicateFigure() {
+        E ellipse = getFigure();
+        return new DrawableEllipse<>(ellipse.duplicate(), getColor(), getSecondColor(), getShadow(), getStrokeThickness(), getStrokeStyle());
     }
+
+
 
     @Override
     public void draw(GraphicsContext gc) {

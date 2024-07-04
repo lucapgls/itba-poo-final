@@ -48,4 +48,9 @@ public class Ellipse extends Figure {
                         getCenterPoint().getY() - getsMinorAxis() / 2));
 
     }
+
+
+    public Ellipse duplicate() {
+        return new Ellipse(new Point(centerPoint.getX() + 10, centerPoint.getY() + 10), sMayorAxis , sMinorAxis);
+    }
 }
