@@ -8,8 +8,6 @@ import frontend.ui.figures.DrawableFigure;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 
 public class PaintPane extends BorderPane {
@@ -181,8 +179,8 @@ public class PaintPane extends BorderPane {
             redrawCanvas();
         });
 
-        sideBar.getStrokeButton().setOnAction(event -> {
-            canvasState.updateStrokeStyle(sideBar.getStrokeButton().getValue());
+        sideBar.getStrokeStyleButton().setOnAction(event -> {
+            canvasState.updateStrokeStyle(sideBar.getStrokeStyleButton().getValue());
             redrawCanvas();
         });
 
