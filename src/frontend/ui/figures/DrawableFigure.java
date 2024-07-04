@@ -2,6 +2,7 @@ package frontend.ui.figures;
 
 import backend.model.Figure;
 import frontend.ui.styles.ShadowEnum;
+import frontend.ui.styles.StrokeStyleEnum;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -18,9 +19,9 @@ public abstract class DrawableFigure<F extends Figure> {
     private Color secondFigureColor;
     private ShadowEnum shadow;
     private Double strokeThickness;
-    private String strokeStyle;
+    private StrokeStyleEnum strokeStyle;
 
-    public DrawableFigure(F figure, Color figureColor, Color secondFigureColor, ShadowEnum shadow, Double strokeThickness, String stroke) {
+    public DrawableFigure(F figure, Color figureColor, Color secondFigureColor, ShadowEnum shadow, Double strokeThickness, StrokeStyleEnum stroke) {
         this.figure = figure;
         this.figureColor = figureColor;
         this.shadow = shadow;
@@ -57,7 +58,7 @@ public abstract class DrawableFigure<F extends Figure> {
 
     public void updateShadow(ShadowEnum shadow){ this.shadow = shadow; }
 
-    public void updateStrokeStyle(String stroke){ this.strokeStyle = stroke; }
+    public void updateStrokeStyle(StrokeStyleEnum stroke){ this.strokeStyle = stroke; }
 
     public void updateStrokeThickness(Double thickness){ this.strokeThickness = thickness; }
 
@@ -65,7 +66,7 @@ public abstract class DrawableFigure<F extends Figure> {
         return shadow;
     }
 
-    public String getStrokeStyle(){ return strokeStyle;}
+    public StrokeStyleEnum getStrokeStyle(){ return strokeStyle;}
 
     public Double getStrokeThickness(){ return strokeThickness; }
 
@@ -75,7 +76,7 @@ public abstract class DrawableFigure<F extends Figure> {
         // Handle figure selection
         gc.setFill(figureColor);
         gc.setStroke(selected ? SELECTED_COLOR : LINE_COLOR);
-        //gc.setFill(figureColorMap.get(figure));
+        getStrokeStyle().applyStrokeStyle(gc);//gc.setFill(figureColorMap.get(figure));
     }
 
 //    public void

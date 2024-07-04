@@ -7,6 +7,7 @@ import backend.model.Point;
 import frontend.ui.SelectedSet;
 import frontend.ui.figures.DrawableFigure;
 import frontend.ui.styles.ShadowEnum;
+import frontend.ui.styles.StrokeStyleEnum;
 import javafx.scene.paint.Color;
 
 import java.sql.SQLOutput;
@@ -92,7 +93,7 @@ public class CanvasState {
         }
     }
 
-    public void updateStrokeStyle(String strokeStyle) {
+    public void updateStrokeStyle(StrokeStyleEnum strokeStyle) {
         for (DrawableFigure<?extends Figure> figure : figures()) {
             if (selectedList.contains(figure)) {
                 figure.updateStrokeStyle(strokeStyle);

@@ -2,6 +2,7 @@ package frontend.ui.figures;
 
 import backend.model.Rectangle;
 import frontend.ui.styles.ShadowEnum;
+import frontend.ui.styles.StrokeStyleEnum;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
@@ -12,7 +13,7 @@ import static frontend.ui.styles.ShadowEnum.*;
 
 public class DrawableRectangle<R extends Rectangle> extends DrawableFigure<R> {
 
-        public DrawableRectangle(R figure, Color color, Color secondColor, ShadowEnum shadow, Double strokeThickness,String stroke) {
+        public DrawableRectangle(R figure, Color color, Color secondColor, ShadowEnum shadow, Double strokeThickness, StrokeStyleEnum stroke) {
             super(figure, color, secondColor, shadow, strokeThickness,stroke);
         }
 
@@ -27,6 +28,7 @@ public class DrawableRectangle<R extends Rectangle> extends DrawableFigure<R> {
 
         private void shadowHandler(R rectangle, GraphicsContext gc){
 
+//            getShadow().applyShadow(R,)
             switch (getShadow()) {
                 case SIMPLE -> {
                     gc.setFill(Color.GRAY);
@@ -57,11 +59,7 @@ public class DrawableRectangle<R extends Rectangle> extends DrawableFigure<R> {
 
         // TODO: Change stroke style to an enum
         private void strokeStyleHandler(GraphicsContext gc){
-            switch (getStrokeStyle()) {
-                case "Normal" -> gc.setLineDashes(0);
-                case "Punteado Simple" -> gc.setLineDashes(10);
-                case "Punteado Complejo" -> gc.setLineDashes(30, 10, 15, 10);
-            }
+
         }
 
 

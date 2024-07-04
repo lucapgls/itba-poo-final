@@ -2,6 +2,7 @@ package frontend.ui.figures;
 
 import backend.model.Ellipse;
 import frontend.ui.styles.ShadowEnum;
+import frontend.ui.styles.StrokeStyleEnum;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
@@ -11,7 +12,7 @@ import javafx.scene.paint.Stop;
 public class DrawableEllipse<E extends Ellipse> extends DrawableFigure<E> {
 
 
-    public DrawableEllipse(E figure, Color color, Color secondColor, ShadowEnum shadow, Double strokeThickness, String stroke) { super(figure, color,secondColor ,shadow, strokeThickness, stroke); }
+    public DrawableEllipse(E figure, Color color, Color secondColor, ShadowEnum shadow, Double strokeThickness, StrokeStyleEnum stroke) { super(figure, color,secondColor ,shadow, strokeThickness, stroke); }
 
     @Override
     public void handleSelection(GraphicsContext gc) {
@@ -19,14 +20,13 @@ public class DrawableEllipse<E extends Ellipse> extends DrawableFigure<E> {
         E ellipse = getFigure();
         shadowHandler(ellipse, gc);
         strokeThicknessHandler(gc);
-        strokeStyleHandler(gc);
         super.handleSelection(gc);
     }
 
     private void shadowHandler(E ellipse, GraphicsContext gc){
 
         switch (getShadow()) {
-            case SIMPLE-> {
+            case SIMPLE -> {
                 gc.setFill(Color.GRAY);
                 gc.fillOval(ellipse.getCenterPoint().getX() + 10 - (ellipse.getsMayorAxis() / 2),
                         ellipse.getCenterPoint().getY() + 10 - (ellipse.getsMinorAxis() / 2),
@@ -62,11 +62,7 @@ public class DrawableEllipse<E extends Ellipse> extends DrawableFigure<E> {
     }
 
     private void strokeStyleHandler(GraphicsContext gc){
-        switch (getStrokeStyle()) {
-            case "Normal" -> gc.setLineDashes(0);
-            case "Punteado Simple" -> gc.setLineDashes(10);
-            case "Punteado Complejo" -> gc.setLineDashes(30, 10, 15, 10);
-        }
+        getStrokeStyle().applyStrokeStyle(gc);
     }
 
     @Override
