@@ -76,10 +76,9 @@ public abstract class DrawableFigure<F extends Figure> {
         // Handle figure selection
         gc.setFill(figureColor);
         gc.setStroke(selected ? SELECTED_COLOR : LINE_COLOR);
-        getStrokeStyle().applyStrokeStyle(gc);//gc.setFill(figureColorMap.get(figure));
+        getStrokeStyle().applyStrokeStyle(gc);
     }
 
-//    public void
 
     public abstract DrawableFigure<? extends Figure> duplicateFigure();
 

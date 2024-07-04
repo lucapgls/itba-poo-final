@@ -8,8 +8,6 @@ import frontend.ui.figures.DrawableFigure;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 
 public class PaintPane extends BorderPane {
@@ -46,6 +44,11 @@ public class PaintPane extends BorderPane {
         canvas.setOnMousePressed(event -> {
             startPoint = new Point(event.getX(), event.getY());
 
+
+            // FIX ME Important casting togglebutton to action button generates exception
+            // this is due to the fact that the togglebutton is not an action button
+            // and this cannot be easily fixed since getTools().getSelectedToggle() returns a togglebutton (from javafx)
+            // and not an action button (from our code).
 
             ActionButton button = (ActionButton) sideBar.getTools().getSelectedToggle();
             if (button != null) {
@@ -185,8 +188,8 @@ public class PaintPane extends BorderPane {
             redrawCanvas();
         });
 
-        sideBar.getStrokeButton().setOnAction(event -> {
-            canvasState.updateStrokeStyle(sideBar.getStrokeButton().getValue());
+        sideBar.getStrokeStyleButton().setOnAction(event -> {
+            canvasState.updateStrokeStyle(sideBar.getStrokeStyleButton().getValue());
             redrawCanvas();
         });
 

@@ -9,17 +9,20 @@ import frontend.ui.styles.ShadowEnum;
 import frontend.ui.styles.StrokeStyleEnum;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
-import javax.swing.plaf.basic.BasicDesktopIconUI;
-
 public class SideBar extends VBox {
+
+    private final CanvasState canvasState;
+
+    // Width of the toolbar
+    private static final int TOOLBAR_WIDTH = 120;
 
     // Botones Barra Izquierda
     private final ToggleButton deleteButton = new ToggleButton("Borrar");
-    private final CanvasState canvasState;
 
     private final ToggleGroup tools = new ToggleGroup();
     private final ToggleGroup actions = new ToggleGroup();
@@ -28,10 +31,11 @@ public class SideBar extends VBox {
     private final ColorPicker secondaryColorPicker = new ColorPicker(Color.ORANGE);
 
     private final ChoiceBox<ShadowEnum> shadowButton = new ShadowButton();
-    private final ChoiceBox<StrokeStyleEnum> strokeButton = new StrokeButton();
+    private final ChoiceBox<StrokeStyleEnum> strokeStyleButton = new StrokeButton();
     private final Slider strokeSlider = new StrokeSlider();
 
     //Labels
+    Label toolsLabel = new Label("Herramientas");
     Label shadowLabel = new Label("Sombra");
     Label fillLabel = new Label("Relleno");
     Label strokeLabel = new Label("Borde");
@@ -39,89 +43,99 @@ public class SideBar extends VBox {
     public SideBar(CanvasState canvasState) {
             super(10);
             this.canvasState = canvasState;
-            setPadding(new Insets(5));
-            setStyle("-fx-background-color: #999;");
-            setPrefWidth(100);
+            setPadding(new Insets(3));
+            setStyle("-fx-background-color: #282828");
+            setPrefWidth(TOOLBAR_WIDTH);
 
-
-        ToggleButton[] toolsArr = getToggleButtons(canvasState);
-
-        for (ToggleButton tool : toolsArr) {
-            tool.setMinWidth(90);
-            tool.setToggleGroup(tools);
-            tool.setCursor(Cursor.HAND);
-        }
-        // TODO getActionsButtons for the actions (divide, duplicate, move to center)
-        ToggleButton[] actionsArr = getActionsButtons(canvasState);
-        for (ToggleButton tool : actionsArr) {
-            tool.setMinWidth(90);
-            tool.setToggleGroup(actions);
-            tool.setCursor(Cursor.HAND);
-        }
-
-        getChildren().addAll(toolsArr);
-        shadowLabel.setStyle("-fx-text-fill: white;");
-        getChildren().add(shadowLabel);
-        getChildren().add(shadowButton);
-        fillLabel.setStyle("-fx-text-fill: white;");
-        getChildren().add(fillLabel);
-		getChildren().add(fillColorPicker);
-        getChildren().add(secondaryColorPicker);
-        fillLabel.setStyle("-fx-text-fill: white;");
-        getChildren().add(strokeLabel);
-        getChildren().add(strokeSlider);
-        getChildren().add(strokeButton);
-        fillLabel.setStyle("-fx-text-fill: white;");
-        getChildren().add(actionsLabel);
-        getChildren().addAll(actionsArr);
-        setPadding(new Insets(5));
-        setStyle("-fx-background-color: #282828");
-        setPrefWidth(100);
-
+            initializeToolsButtons();
+            initializeColorPickers();
+            initializeShadowControls();
+            initializeStrokeControls();
+            initializeActionButtons();
     }
+
+    private void initializeColorPickers() {
+        initializeWithStyle(fillLabel, fillColorPicker, secondaryColorPicker);
+    }
+
+    private void initializeShadowControls() {
+        initializeWithStyle(shadowLabel, shadowButton);
+    }
+
+    private void initializeStrokeControls() {
+        initializeWithStyle(strokeLabel, strokeSlider, strokeStyleButton);
+    }
+
+    private void initializeToolsButtons() {
+        initializeWithStyle(toolsLabel, tools, getToggleButtons(canvasState));
+    }
+
+    private void initializeActionButtons() {
+        initializeWithStyle(actionsLabel, actions, getActionsButtons(canvasState));
+    }
+
+    private void initializeWithStyle(Label label, ToggleGroup group, ToggleButton... buttons) {
+        for (ToggleButton button : buttons) {
+            button.setPrefWidth(TOOLBAR_WIDTH);
+            button.setToggleGroup(group);
+            button.setCursor(Cursor.HAND);
+        }
+        initializeWithStyle(label, buttons);
+    }
+
+    private void initializeWithStyle(Label label, Node... nodes) {
+        String toolbarButtonStyle = "-fx-background-color: #282828; " +
+                "-fx-text-fill: white;" +
+                "-fx-font-size: 12px;";
+        label.setStyle(toolbarButtonStyle);
+        getChildren().add(label);
+        for (Node node : nodes) {
+            getChildren().add(node);
+        }
+    }
+
+    // Getters
 
     private ToggleButton[] getActionsButtons(CanvasState canvasState){
         DuplicateButton duplicateButton = new DuplicateButton(canvasState);
-        DivideButton divideButton = new DivideButton(canvasState);
-        ToggleButton[] actionsArr = {duplicateButton, divideButton};
-        return actionsArr;
+        return new ToggleButton[]{duplicateButton};
     }
 
     private ToggleButton[] getToggleButtons(CanvasState canvasState) {
         FigureButton<Rectangle> rectangleButton = new FigureButton<>("Rectángulo", canvasState,
-                (start, end) -> new DrawableRectangle<>(new Rectangle(start, end),fillColorPicker.getValue(), secondaryColorPicker.getValue(), shadowButton.getValue(), strokeSlider.getValue(), strokeButton.getValue())
+                (start, end) -> new DrawableRectangle<>(new Rectangle(start, end),fillColorPicker.getValue(), secondaryColorPicker.getValue(), shadowButton.getValue(), strokeSlider.getValue(), strokeStyleButton.getValue())
         );
 
         FigureButton<Ellipse> ellipseButton = new FigureButton<>("Elipse", canvasState,
                 (start, end) -> new DrawableEllipse<>(new Ellipse(
                     new Point(Math.abs(end.getX() + start.getX()) / 2, (Math.abs((end.getY() + start.getY())) / 2)),
                     Math.abs(end.getX() - start.getX()),
-                    Math.abs(end.getY() - start.getY())), fillColorPicker.getValue(), secondaryColorPicker.getValue(), shadowButton.getValue(), strokeSlider.getValue(),strokeButton.getValue())
+                    Math.abs(end.getY() - start.getY())), fillColorPicker.getValue(), secondaryColorPicker.getValue(), shadowButton.getValue(), strokeSlider.getValue(), strokeStyleButton.getValue())
         );
 
         FigureButton<Square> squareButton = new FigureButton<>("Cuadrado", canvasState,
                 (start, end) -> new DrawableRectangle<>(new Square(start, end.getX() - start.getX()),
-                fillColorPicker.getValue(), secondaryColorPicker.getValue(), shadowButton.getValue(), strokeSlider.getValue(), strokeButton.getValue())
+                fillColorPicker.getValue(), secondaryColorPicker.getValue(), shadowButton.getValue(), strokeSlider.getValue(), strokeStyleButton.getValue())
         );
 
         FigureButton<Circle> circleButton = new FigureButton<>("Círculo", canvasState,
                 (start, end) -> new DrawableEllipse<>(new Circle(start, end.getX() - start.getX()),
-                        fillColorPicker.getValue(), secondaryColorPicker.getValue(), shadowButton.getValue(), strokeSlider.getValue(), strokeButton.getValue())
+                        fillColorPicker.getValue(), secondaryColorPicker.getValue(), shadowButton.getValue(), strokeSlider.getValue(), strokeStyleButton.getValue())
         );
 
         // Other buttons
         SelectionButton selectionButton = new SelectionButton(canvasState);
 
 
-        ToggleButton[] toolsArr = {selectionButton, circleButton, rectangleButton, ellipseButton, squareButton, deleteButton};
-        return toolsArr;
+        return new ToggleButton[]{selectionButton, circleButton, rectangleButton, ellipseButton, squareButton, deleteButton};
     }
+
 
     public ChoiceBox<ShadowEnum> getShadowButton(){
         return this.shadowButton;
     }
-    public ChoiceBox<StrokeStyleEnum> getStrokeButton(){
-        return this.strokeButton;
+    public ChoiceBox<StrokeStyleEnum> getStrokeStyleButton(){
+        return this.strokeStyleButton;
     }
     public Slider getStrokeSlider(){
         return this.strokeSlider;
@@ -134,7 +148,6 @@ public class SideBar extends VBox {
     public ToggleGroup getActions(){
         return actions;
     }
-
 
     public Color getColorPicker() {
         return fillColorPicker.getValue();
@@ -157,8 +170,4 @@ public class SideBar extends VBox {
     public ToggleButton getDuplicateButton() {
         return (ToggleButton) actions.getToggles().getFirst();
     }
-
-    public ToggleButton getDivideButton() {
-        return (ToggleButton) actions.getToggles().get(1);
     }
-}
