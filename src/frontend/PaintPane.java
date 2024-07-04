@@ -120,6 +120,12 @@ public class PaintPane extends BorderPane {
             ActionButton button = (ActionButton) sideBar.getTools().getSelectedToggle();
             if (button != null) {
                 button.onMouseClicked(eventPoint);
+                if(!canvasState.noSelection()){
+                    DrawableFigure selectedFigure = canvasState.getSelectedFigure();
+                    sideBar.getColorPickerButton().setValue(selectedFigure.getColor());
+                    sideBar.getSecondaryColorPickerButton().setValue(selectedFigure.getSecondColor());
+                    sideBar.getShadowButton().setValue(selectedFigure.getShadow());
+                }
             }
 
 //            if (found) {

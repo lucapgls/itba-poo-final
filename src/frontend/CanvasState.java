@@ -30,6 +30,12 @@ public class CanvasState {
         return new ArrayList<>(list);
     }
 
+    public DrawableFigure getSelectedFigure() {
+        if (selectedList.isEmpty())
+            return null;
+        return selectedList.iterator().next();
+    }
+
 
     public void deleteFigure() {
         for (DrawableFigure<?extends Figure> figure : figures()){
