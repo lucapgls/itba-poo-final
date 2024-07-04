@@ -4,12 +4,7 @@ import backend.model.Figure;
 import backend.model.Point;
 import backend.model.Rectangle;
 import frontend.CanvasState;
-import frontend.ui.MouseActions;
 import frontend.ui.figures.DrawableFigure;
-import javafx.scene.control.ToggleButton;
-
-import java.util.List;
-import java.util.function.Predicate;
 
 public class SelectionButton extends ActionButton {
 
@@ -30,11 +25,14 @@ public class SelectionButton extends ActionButton {
     public void onMouseClicked(Point point) {
         start = point;
         end = point;
-        canvasState.clearSelectedFigures();
+        canvasState.clearSelectedFigure();
         for (DrawableFigure<? extends Figure> figure : canvasState.figures()) {
             if (figure.getFigure().isReachable(start)) {
-                // add to seleceted list from canvasstate
-                canvasState.addSelectedFigures(figure);
+
+                canvasState.addSelectedFigure(figure);
+                figure.setSelected(true);
+            } else {
+                figure.setSelected(false);
             }
         }
     }
@@ -49,34 +47,37 @@ public class SelectionButton extends ActionButton {
         end = point;
         // Released but no movement
         if (start != null && end != null && start.getX() == end.getX() && start.getY() == end.getY()) {
-            canvasState.clearSelectedFigures();
-            return;
+            canvasState.clearSelectedFigure();
+
         }
 
 
-        selectionArea = new Rectangle(start, end);
-
-        // and clear any selected figures within it
-        for (DrawableFigure<? extends Figure> figure : canvasState.figures()) {
-            if (figure.getFigure().isContained(selectionArea)) {
-                // add to seleceted list from canvasstate
-                canvasState.addSelectedFigures(figure);
-            }
-        }
-        selectionArea = null;
+//        selectionArea = new Rectangle(start, end);
+//
+//        // and clear any selected figures within it
+//        for (DrawableFigure<? extends Figure> figure : canvasState.figures()) {
+//            if (figure.getFigure().isContained(selectionArea)) {
+//                // add to seleceted list from canvasstate
+//                canvasState.addSelectedFigure(figure);
+//            }
+//        }
+//        selectionArea = null;
     }
 
     @Override
     public void onMouseDragged(Point point) {
 
-        canvasState.clearSelectedFigures();
+//
+//        canvasState.clearSelectedFigure();
+//
+//        if (selectionArea != null) {
+//            double diffX = (point.getX() - selectionArea.getTopLeft().getX());
+//            double diffY = (point.getY() - selectionArea.getTopLeft().getY());
+//            end.move(diffX, diffY);
+//        }
 
-        if (selectionArea != null) {
-            double diffX = (point.getX() - selectionArea.getTopLeft().getX());
-            double diffY = (point.getY() - selectionArea.getTopLeft().getY());
-            end.move(diffX, diffY);
+            // modify the starting point of the imaginary rectangle
         }
-
-        // modify the starting point of the imaginary rectangle
     }
-}
+
+

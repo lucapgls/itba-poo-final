@@ -58,8 +58,9 @@ public class SideBar extends VBox {
         getChildren().add(fillLabel);
 		getChildren().add(fillColorPicker);
         getChildren().add(secondaryColorPicker);
-        fillLabel.setStyle("-fx-text-fill: white;");
+        strokeLabel.setStyle("-fx-text-fill: white;");
         getChildren().add(strokeLabel);
+        strokeSlider.setStyle("-fx-text-fill: white;");
         getChildren().add(strokeSlider);
         getChildren().add(strokeButton);
         setPadding(new Insets(5));

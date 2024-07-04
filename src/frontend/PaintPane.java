@@ -1,27 +1,16 @@
 package frontend;
 
-import frontend.CanvasState;
 import backend.model.*;
-import frontend.ui.MouseActions;
 import frontend.ui.bars.SideBar;
 import frontend.ui.buttons.ActionButton;
-import frontend.ui.buttons.FigureButton;
 import frontend.ui.figures.DrawableFigure;
-import javafx.geometry.Insets;
-import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class PaintPane extends BorderPane {
@@ -125,6 +114,8 @@ public class PaintPane extends BorderPane {
                     sideBar.getColorPickerButton().setValue(selectedFigure.getColor());
                     sideBar.getSecondaryColorPickerButton().setValue(selectedFigure.getSecondColor());
                     sideBar.getShadowButton().setValue(selectedFigure.getShadow());
+                    sideBar.getStrokeButton().setValue(selectedFigure.getStrokeStyle());
+                    sideBar.getStrokeSlider().setValue(selectedFigure.getStrokeThickness());
                 }
             }
 
@@ -161,12 +152,12 @@ public class PaintPane extends BorderPane {
         });
 
         sideBar.getColorPickerButton().setOnAction(event -> {
-            canvasState.updateSelectedFigures(sideBar.getColorPicker(), true);
+            canvasState.updateSelectedFigure(sideBar.getColorPicker(), true);
             redrawCanvas();
         });
 
         sideBar.getSecondaryColorPickerButton().setOnAction(event -> {
-            canvasState.updateSelectedFigures(sideBar.getSecondaryColorPicker() , false);
+            canvasState.updateSelectedFigure(sideBar.getSecondaryColorPicker() , false);
             redrawCanvas();
         });
 
