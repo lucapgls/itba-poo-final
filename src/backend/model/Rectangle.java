@@ -40,4 +40,20 @@ public class Rectangle extends Figure {
     public Rectangle duplicate() {
         return new Rectangle(new Point(topLeft.getX() + 10, topLeft.getY() + 10), new Point(bottomRight.getX() + 10, bottomRight.getY() + 10));
     }
+
+    public Rectangle divide(){
+        //primero divido este rectangulo y dsp devuelvo el nuevo
+        double newTopLeftX = topLeft.getX() + (bottomRight.getX() - topLeft.getX())/2;
+        double newTopLeftY = topLeft.getY() - (topLeft.getY() - bottomRight.getY())/4;
+        double newBottomRightY = bottomRight.getY() + (topLeft.getY() - bottomRight.getY())/4;
+        Rectangle ans = new Rectangle(new Point(newTopLeftX, newTopLeftY), new Point(bottomRight.getX(), newBottomRightY));
+
+        double newBottomRightX = bottomRight.getX() - (bottomRight.getX() - topLeft.getX())/2;
+
+        this.topLeft = new Point(topLeft.getX(), newTopLeftY);
+        this.bottomRight = new Point(newBottomRightX, newBottomRightY);
+
+        return ans;
+
+    }
 }

@@ -37,7 +37,7 @@ public class PaintPane extends BorderPane {
 
     public PaintPane(CanvasState canvasState, StatusPane statusPane) {
         this.canvasState = canvasState;
-      //  this.statusPane = statusPane;
+        //  this.statusPane = statusPane;
 
         sideBar = new SideBar(canvasState);
 
@@ -112,7 +112,7 @@ public class PaintPane extends BorderPane {
             ActionButton button = (ActionButton) sideBar.getTools().getSelectedToggle();
             if (button != null) {
                 button.onMouseClicked(eventPoint);
-                if(!canvasState.noSelection()){
+                if (!canvasState.noSelection()) {
                     DrawableFigure selectedFigure = canvasState.getSelectedFigure();
                     sideBar.getColorPickerButton().setValue(selectedFigure.getColor());
                     sideBar.getSecondaryColorPickerButton().setValue(selectedFigure.getSecondColor());
@@ -143,20 +143,14 @@ public class PaintPane extends BorderPane {
 
         sideBar.getDeleteButton().setOnAction(event -> {
 
-            if(canvasState.noSelection()) {
-                alertInfo("No hay figuras seleccionadas");
-                return;
-            }
+            noSelectionAlert(canvasState);
 
-                canvasState.deleteFigure();
-                redrawCanvas();
+            canvasState.deleteFigure();
+            redrawCanvas();
         });
 
         sideBar.getDuplicateButton().setOnAction(event -> {
-            if(canvasState.noSelection()) {
-                alertInfo("No hay figuras seleccionadas");
-                return;
-            }
+            noSelectionAlert(canvasState);
 
             DrawableFigure<? extends Figure> selectedFigure = canvasState.getSelectedFigure();
             if (selectedFigure != null) {
@@ -164,6 +158,16 @@ public class PaintPane extends BorderPane {
                 canvasState.addFigure(newFigure);
             }
             redrawCanvas();
+        });
+
+        sideBar.getDivideButton().setOnAction(event-> {
+           noSelectionAlert(canvasState);
+
+            DrawableFigure<? extends Figure> selectedFigure = canvasState.getSelectedFigure();
+            if (selectedFigure != null) {
+                DrawableFigure<? extends Figure> newFigure = selectedFigure.divideFigure();
+                canvasState.addFigure(newFigure);
+            }
         });
 
         sideBar.getColorPickerButton().setOnAction(event -> {
@@ -206,6 +210,13 @@ public class PaintPane extends BorderPane {
 
             figure.draw(gc);
 
+        }
+    }
+
+    private void noSelectionAlert(CanvasState c){
+        if (c.noSelection()) {
+            alertInfo("No hay figuras seleccionadas");
+            return;
         }
     }
 

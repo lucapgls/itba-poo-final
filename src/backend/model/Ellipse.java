@@ -53,4 +53,15 @@ public class Ellipse extends Figure {
     public Ellipse duplicate() {
         return new Ellipse(new Point(centerPoint.getX() + 10, centerPoint.getY() + 10), sMayorAxis , sMinorAxis);
     }
+
+    public Ellipse divide(){
+        //primero cambio la ellipse esta y despues returneo la misma pero movida
+        Double newCenterX = centerPoint.getX() + (getsMayorAxis()/2)/2;
+        Ellipse ans = new Ellipse(new Point(newCenterX, centerPoint.getY()), sMayorAxis/2 , sMinorAxis/2);
+        newCenterX = centerPoint.getX() - (getsMayorAxis()/2)/2;
+        this.sMayorAxis = sMayorAxis/2;
+        this.sMinorAxis = sMinorAxis/2;
+        this.centerPoint = new Point(newCenterX, centerPoint.getY());
+        return ans;
+    }
 }

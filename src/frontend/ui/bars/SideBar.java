@@ -21,8 +21,8 @@ public class SideBar extends VBox {
     private final ToggleButton deleteButton = new ToggleButton("Borrar");
     private final CanvasState canvasState;
 
-    private ToggleGroup tools = new ToggleGroup();
-    private ToggleGroup actions = new ToggleGroup();
+    private final ToggleGroup tools = new ToggleGroup();
+    private final ToggleGroup actions = new ToggleGroup();
 
     private final ColorPicker fillColorPicker = new ColorPicker(Color.YELLOW);
     private final ColorPicker secondaryColorPicker = new ColorPicker(Color.ORANGE);
@@ -82,7 +82,8 @@ public class SideBar extends VBox {
 
     private ToggleButton[] getActionsButtons(CanvasState canvasState){
         DuplicateButton duplicateButton = new DuplicateButton(canvasState);
-        ToggleButton[] actionsArr = {duplicateButton};
+        DivideButton divideButton = new DivideButton(canvasState);
+        ToggleButton[] actionsArr = {duplicateButton, divideButton};
         return actionsArr;
     }
 
@@ -156,4 +157,8 @@ public class SideBar extends VBox {
     public ToggleButton getDuplicateButton() {
         return (ToggleButton) actions.getToggles().getFirst();
     }
+
+    public ToggleButton getDivideButton() {
+        return (ToggleButton) actions.getToggles().get(1);
     }
+}

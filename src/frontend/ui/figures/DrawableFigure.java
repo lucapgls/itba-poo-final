@@ -83,6 +83,8 @@ public abstract class DrawableFigure<F extends Figure> {
 
     public abstract DrawableFigure<? extends Figure> duplicateFigure();
 
+    public abstract DrawableFigure<? extends Figure> divideFigure();
+
     public abstract void draw(GraphicsContext gc);
 
 }

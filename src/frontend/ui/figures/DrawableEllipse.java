@@ -70,7 +70,11 @@ public class DrawableEllipse<E extends Ellipse> extends DrawableFigure<E> {
         return new DrawableEllipse<>(ellipse.duplicate(), getColor(), getSecondColor(), getShadow(), getStrokeThickness(), getStrokeStyle());
     }
 
-
+    @Override
+    public DrawableFigure<? extends Figure> divideFigure(){
+        E ellipse = getFigure();
+        return new DrawableEllipse<>(ellipse.divide(), getColor(), getSecondColor(), getShadow(), getStrokeThickness(), getStrokeStyle());
+    }
 
     @Override
     public void draw(GraphicsContext gc) {

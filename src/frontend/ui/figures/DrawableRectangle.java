@@ -70,6 +70,12 @@ public class DrawableRectangle<R extends Rectangle> extends DrawableFigure<R> {
         }
 
         @Override
+        public DrawableFigure<? extends Figure> divideFigure() {
+            R rectangle = getFigure();
+            return new DrawableRectangle<>(rectangle.divide(), getColor(), getSecondColor(), getShadow(), getStrokeThickness(), getStrokeStyle());
+        }
+
+        @Override
         public void draw(GraphicsContext gc) {
 
             LinearGradient linearGradient = new LinearGradient(0, 0, 1, 0, true,
