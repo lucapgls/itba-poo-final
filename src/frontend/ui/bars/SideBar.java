@@ -13,6 +13,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
+import javax.swing.plaf.basic.BasicDesktopIconUI;
+
 public class SideBar extends VBox {
 
     // Botones Barra Izquierda
@@ -32,7 +34,7 @@ public class SideBar extends VBox {
     Label shadowLabel = new Label("Sombra");
     Label fillLabel = new Label("Relleno");
     Label strokeLabel = new Label("Borde");
-
+    Label actionsLabel = new Label("Acciones");
     public SideBar(CanvasState canvasState) {
             super(10);
             this.canvasState = canvasState;
@@ -48,7 +50,13 @@ public class SideBar extends VBox {
             tool.setToggleGroup(tools);
             tool.setCursor(Cursor.HAND);
         }
-
+        // TODO getActionsButtons for the actions (divide, duplicate, move to center)
+        ToggleButton[] actionsArr = getActionsButtons(canvasState);
+        for (ToggleButton tool : actionsArr) {
+            tool.setMinWidth(90);
+            tool.setToggleGroup(tools);
+            tool.setCursor(Cursor.HAND);
+        }
 
         getChildren().addAll(toolsArr);
         shadowLabel.setStyle("-fx-text-fill: white;");
@@ -61,7 +69,7 @@ public class SideBar extends VBox {
         fillLabel.setStyle("-fx-text-fill: white;");
         getChildren().add(strokeLabel);
         getChildren().add(strokeSlider);
-        getChildren().add(strokeButton);
+        getChildren().add(strokeButton);fillLabel.setStyle("-fx-text-fill: white;");getChildren().add(actionsLabel); getChildren().addAll(actionsArr);
         setPadding(new Insets(5));
         setStyle("-fx-background-color: #282828");
         setPrefWidth(100);
@@ -129,5 +137,4 @@ public class SideBar extends VBox {
     public ToggleButton getDeleteButton() {
         return deleteButton;
     }
-
-}
+    }

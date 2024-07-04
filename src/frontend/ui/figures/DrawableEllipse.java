@@ -25,6 +25,7 @@ public class DrawableEllipse<E extends Ellipse> extends DrawableFigure<E> {
 
     private void shadowHandler(E ellipse, GraphicsContext gc){
 
+        // TODO Make it more generic with functions
         switch (getShadow()) {
             case SIMPLE -> {
                 gc.setFill(Color.GRAY);
