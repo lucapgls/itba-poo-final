@@ -22,7 +22,7 @@ public class SideBar extends VBox {
     private static final int TOOLBAR_WIDTH = 120;
 
     // Botones Barra Izquierda
-    private final ToggleButton deleteButton = new ToggleButton("Borrar");
+    private final ToggleButton deleteButton;
 
     private final ToggleGroup tools = new ToggleGroup();
     private final ToggleGroup actions = new ToggleGroup();
@@ -43,6 +43,7 @@ public class SideBar extends VBox {
     public SideBar(CanvasState canvasState) {
             super(10);
             this.canvasState = canvasState;
+            this.deleteButton = new DeleteButton(canvasState);
             setPadding(new Insets(3));
             setStyle("-fx-background-color: #282828");
             setPrefWidth(TOOLBAR_WIDTH);
@@ -98,7 +99,8 @@ public class SideBar extends VBox {
 
     private ToggleButton[] getActionsButtons(CanvasState canvasState){
         DuplicateButton duplicateButton = new DuplicateButton(canvasState);
-        return new ToggleButton[]{duplicateButton};
+        DivideButton divideButton = new DivideButton(canvasState);
+        return new ToggleButton[]{duplicateButton, divideButton};
     }
 
     private ToggleButton[] getToggleButtons(CanvasState canvasState) {
@@ -170,4 +172,9 @@ public class SideBar extends VBox {
     public ToggleButton getDuplicateButton() {
         return (ToggleButton) actions.getToggles().getFirst();
     }
+
+    public ToggleButton getDivideButton() {
+        return (ToggleButton) actions.getToggles().get(1);
+    }
+
     }
