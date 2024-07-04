@@ -24,30 +24,35 @@ public class DrawableEllipse<E extends Ellipse> extends DrawableFigure<E> {
 
     private void shadowHandler(E ellipse, GraphicsContext gc){
 
-        if(getShadow().equals("Simple")){
-            gc.setFill(Color.GRAY);
-            gc.fillOval(ellipse.getCenterPoint().getX() + 10 - (ellipse.getsMayorAxis() / 2),
-                    ellipse.getCenterPoint().getY() + 10 - (ellipse.getsMinorAxis() / 2),
-                    ellipse.getsMayorAxis(),
-                    ellipse.getsMinorAxis());
-        } else if (getShadow().equals("Coloreada")){
-            gc.setFill(getColor().darker());
-            gc.fillOval(ellipse.getCenterPoint().getX() + 10 - (ellipse.getsMayorAxis() / 2),
-                    ellipse.getCenterPoint().getY() + 10 - (ellipse.getsMinorAxis() / 2),
-                    ellipse.getsMayorAxis(),
-                    ellipse.getsMinorAxis());
-        } else if (getShadow().equals("Simple Inversa")){
-            gc.setFill(Color.GRAY);
-            gc.fillOval(ellipse.getCenterPoint().getX() - 10 - (ellipse.getsMayorAxis() / 2),
-                    ellipse.getCenterPoint().getY() - 10 - (ellipse.getsMinorAxis() / 2),
-                    ellipse.getsMayorAxis(),
-                    ellipse.getsMinorAxis());
-        } else if (getShadow().equals("Coloreada Inversa")){
-            gc.setFill(getColor().darker());
-            gc.fillOval(ellipse.getCenterPoint().getX() - 10 - (ellipse.getsMayorAxis() / 2),
-                    ellipse.getCenterPoint().getY() - 10 - (ellipse.getsMinorAxis() / 2),
-                    ellipse.getsMayorAxis(),
-                    ellipse.getsMinorAxis());
+        switch (getShadow()) {
+            case "Simple" -> {
+                gc.setFill(Color.GRAY);
+                gc.fillOval(ellipse.getCenterPoint().getX() + 10 - (ellipse.getsMayorAxis() / 2),
+                        ellipse.getCenterPoint().getY() + 10 - (ellipse.getsMinorAxis() / 2),
+                        ellipse.getsMayorAxis(),
+                        ellipse.getsMinorAxis());
+            }
+            case "Coloreada" -> {
+                gc.setFill(getColor().darker());
+                gc.fillOval(ellipse.getCenterPoint().getX() + 10 - (ellipse.getsMayorAxis() / 2),
+                        ellipse.getCenterPoint().getY() + 10 - (ellipse.getsMinorAxis() / 2),
+                        ellipse.getsMayorAxis(),
+                        ellipse.getsMinorAxis());
+            }
+            case "Simple Inversa" -> {
+                gc.setFill(Color.GRAY);
+                gc.fillOval(ellipse.getCenterPoint().getX() - 10 - (ellipse.getsMayorAxis() / 2),
+                        ellipse.getCenterPoint().getY() - 10 - (ellipse.getsMinorAxis() / 2),
+                        ellipse.getsMayorAxis(),
+                        ellipse.getsMinorAxis());
+            }
+            case "Coloreada Inversa" -> {
+                gc.setFill(getColor().darker());
+                gc.fillOval(ellipse.getCenterPoint().getX() - 10 - (ellipse.getsMayorAxis() / 2),
+                        ellipse.getCenterPoint().getY() - 10 - (ellipse.getsMinorAxis() / 2),
+                        ellipse.getsMayorAxis(),
+                        ellipse.getsMinorAxis());
+            }
         }
     }
 
@@ -56,12 +61,10 @@ public class DrawableEllipse<E extends Ellipse> extends DrawableFigure<E> {
     }
 
     private void strokeStyleHandler(GraphicsContext gc){
-        if(getStrokeStyle().equals("Simple")) {
-            gc.setLineWidth(1);
-        } else if(getStrokeStyle().equals("Punteado Simple")){
-            gc.setLineDashes(10);
-        } else if(getStrokeStyle().equals("Punteado Complejo")){
-            gc.setLineDashes(30, 10, 15, 10);
+        switch (getStrokeStyle()) {
+            case "Normal" -> gc.setLineDashes(0);
+            case "Punteado Simple" -> gc.setLineDashes(10);
+            case "Punteado Complejo" -> gc.setLineDashes(30, 10, 15, 10);
         }
     }
 

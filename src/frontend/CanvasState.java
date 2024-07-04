@@ -8,6 +8,7 @@ import frontend.ui.SelectedSet;
 import frontend.ui.figures.DrawableFigure;
 import javafx.scene.paint.Color;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;

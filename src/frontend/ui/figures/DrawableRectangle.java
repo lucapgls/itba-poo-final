@@ -24,22 +24,27 @@ public class DrawableRectangle<R extends Rectangle> extends DrawableFigure<R> {
 
         private void shadowHandler(R rectangle, GraphicsContext gc){
 
-            if(getShadow().equals("Simple")){
-                gc.setFill(Color.GRAY);
-                gc.fillRect(rectangle.getTopLeft().getX() + 10, rectangle.getTopLeft().getY() + 10,
-                        Math.abs(rectangle.getTopLeft().getX() - rectangle.getBottomRight().getX()), Math.abs(rectangle.getTopLeft().getY() - rectangle.getBottomRight().getY()));
-            } else if (getShadow().equals("Coloreada")){
-                gc.setFill(getColor().darker());
-                gc.fillRect(rectangle.getTopLeft().getX() + 10, rectangle.getTopLeft().getY() + 10,
-                        Math.abs(rectangle.getTopLeft().getX() - rectangle.getBottomRight().getX()), Math.abs(rectangle.getTopLeft().getY() - rectangle.getBottomRight().getY()));
-            } else if(getShadow().equals("Simple Inversa")){
-                gc.setFill(Color.GRAY);
-                gc.fillRect(rectangle.getTopLeft().getX() - 10, rectangle.getTopLeft().getY() - 10,
-                        Math.abs(rectangle.getTopLeft().getX() - rectangle.getBottomRight().getX()), Math.abs(rectangle.getTopLeft().getY() - rectangle.getBottomRight().getY()));
-            } else if(getShadow().equals("Coloreada Inversa")){
-                gc.setFill(getColor().darker());
-                gc.fillRect(rectangle.getTopLeft().getX() - 10, rectangle.getTopLeft().getY() - 10,
-                        Math.abs(rectangle.getTopLeft().getX() - rectangle.getBottomRight().getX()), Math.abs(rectangle.getTopLeft().getY() - rectangle.getBottomRight().getY()));
+            switch (getShadow()) {
+                case "Simple" -> {
+                    gc.setFill(Color.GRAY);
+                    gc.fillRect(rectangle.getTopLeft().getX() + 10, rectangle.getTopLeft().getY() + 10,
+                            Math.abs(rectangle.getTopLeft().getX() - rectangle.getBottomRight().getX()), Math.abs(rectangle.getTopLeft().getY() - rectangle.getBottomRight().getY()));
+                }
+                case "Coloreada" -> {
+                    gc.setFill(getColor().darker());
+                    gc.fillRect(rectangle.getTopLeft().getX() + 10, rectangle.getTopLeft().getY() + 10,
+                            Math.abs(rectangle.getTopLeft().getX() - rectangle.getBottomRight().getX()), Math.abs(rectangle.getTopLeft().getY() - rectangle.getBottomRight().getY()));
+                }
+                case "Simple Inversa" -> {
+                    gc.setFill(Color.GRAY);
+                    gc.fillRect(rectangle.getTopLeft().getX() - 10, rectangle.getTopLeft().getY() - 10,
+                            Math.abs(rectangle.getTopLeft().getX() - rectangle.getBottomRight().getX()), Math.abs(rectangle.getTopLeft().getY() - rectangle.getBottomRight().getY()));
+                }
+                case "Coloreada Inversa" -> {
+                    gc.setFill(getColor().darker());
+                    gc.fillRect(rectangle.getTopLeft().getX() - 10, rectangle.getTopLeft().getY() - 10,
+                            Math.abs(rectangle.getTopLeft().getX() - rectangle.getBottomRight().getX()), Math.abs(rectangle.getTopLeft().getY() - rectangle.getBottomRight().getY()));
+                }
             }
         }
 
@@ -48,12 +53,10 @@ public class DrawableRectangle<R extends Rectangle> extends DrawableFigure<R> {
         }
 
         private void strokeStyleHandler(GraphicsContext gc){
-            if(getStrokeStyle().equals("Simple")) {
-                gc.setLineWidth(1);
-            } else if(getStrokeStyle().equals("Punteado Simple")){
-              gc.setLineDashes(10);
-            } else if(getStrokeStyle().equals("Punteado Complejo")){
-              gc.setLineDashes(30, 10, 15, 10);
+            switch (getStrokeStyle()) {
+                case "Normal" -> gc.setLineDashes(0);
+                case "Punteado Simple" -> gc.setLineDashes(10);
+                case "Punteado Complejo" -> gc.setLineDashes(30, 10, 15, 10);
             }
         }
 
