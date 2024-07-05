@@ -100,7 +100,8 @@ public class SideBar extends VBox {
     private ToggleButton[] getActionsButtons(CanvasState canvasState){
         DuplicateButton duplicateButton = new DuplicateButton(canvasState);
         DivideButton divideButton = new DivideButton(canvasState);
-        return new ToggleButton[]{duplicateButton, divideButton};
+        CenterButton centerButton = new CenterButton(canvasState);
+        return new ToggleButton[]{duplicateButton, divideButton, centerButton};
     }
 
     private ToggleButton[] getToggleButtons(CanvasState canvasState) {
@@ -178,4 +179,7 @@ public class SideBar extends VBox {
         return (ToggleButton) actions.getToggles().get(1);
     }
 
+    public ToggleButton getCenterButton(){ 
+        return (ToggleButton) actions.getToggles().get(2);
+    }
     }

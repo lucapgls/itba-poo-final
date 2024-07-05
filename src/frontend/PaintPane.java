@@ -169,8 +169,10 @@ public class PaintPane extends BorderPane {
 
             DrawableFigure<? extends Figure> selectedFigure = canvasState.getSelectedFigure();
             if (selectedFigure != null) {
-                DrawableFigure<? extends Figure> newFigure = selectedFigure.divideFigure();
-                canvasState.addFigure(newFigure);
+                DrawableFigure<? extends Figure>[] newFigures = selectedFigure.divideFigure();
+                canvasState.addFigure(newFigures[0]);
+                canvasState.addFigure(newFigures[1]);
+                canvasState.deleteFigure();
             }
             redrawCanvas();
         });
