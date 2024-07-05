@@ -18,7 +18,9 @@ public class Ellipse extends Figure {
         return String.format("Elipse [Centro: %s, DMayor: %.2f, DMenor: %.2f]", centerPoint, sMayorAxis, sMinorAxis);
     }
 
-    public Point getCenterPoint() {
+
+    @Override
+    public Point getCenter() {
         return centerPoint;
     }
 
@@ -32,36 +34,43 @@ public class Ellipse extends Figure {
 
     @Override
     public boolean isReachable(Point selection) {
-        return ((Math.pow(selection.getX() - this.getCenterPoint().getX(), 2) / Math.pow(this.getsMayorAxis(), 2)) +
-                (Math.pow(selection.getY() - this.getCenterPoint().getY(), 2) / Math.pow(this.getsMinorAxis(), 2))) <= 0.30;
+        return ((Math.pow(selection.getX() - this.getCenter().getX(), 2) / Math.pow(this.getsMayorAxis(), 2)) +
+                (Math.pow(selection.getY() - this.getCenter().getY(), 2) / Math.pow(this.getsMinorAxis(), 2))) <= 0.30;
     }
 
     @Override
     public boolean isContained(Rectangle selectionRect) {
-        return selectionRect.isReachable(new Point(getCenterPoint().getX() + getsMayorAxis() / 2,
-                                getCenterPoint().getY())) &&
-                selectionRect.isReachable(new Point(getCenterPoint().getX() - getsMinorAxis() / 2 ,
-                        getCenterPoint().getY())) &&
-                selectionRect.isReachable(new Point(getCenterPoint().getX(),
-                        getCenterPoint().getY() + getsMinorAxis() / 2)) &&
-                selectionRect.isReachable(new Point(getCenterPoint().getX(),
-                        getCenterPoint().getY() - getsMinorAxis() / 2));
+        return selectionRect.isReachable(new Point(getCenter().getX() + getsMayorAxis() / 2,
+                                getCenter().getY())) &&
+                selectionRect.isReachable(new Point(getCenter().getX() - getsMinorAxis() / 2 ,
+                        getCenter().getY())) &&
+                selectionRect.isReachable(new Point(getCenter().getX(),
+                        getCenter().getY() + getsMinorAxis() / 2)) &&
+                selectionRect.isReachable(new Point(getCenter().getX(),
+                        getCenter().getY() - getsMinorAxis() / 2));
 
     }
 
 
+    @Override
     public Ellipse duplicate() {
         return new Ellipse(new Point(centerPoint.getX() + 10, centerPoint.getY() + 10), sMayorAxis , sMinorAxis);
     }
 
-    public Ellipse divide(){
-        //primero cambio la ellipse esta y despues returneo la misma pero movida
-        Double newCenterX = centerPoint.getX() + (getsMayorAxis()/2)/2;
-        Ellipse ans = new Ellipse(new Point(newCenterX, centerPoint.getY()), sMayorAxis/2 , sMinorAxis/2);
-        newCenterX = centerPoint.getX() - (getsMayorAxis()/2)/2;
-        this.sMayorAxis = sMayorAxis/2;
-        this.sMinorAxis = sMinorAxis/2;
-        this.centerPoint = new Point(newCenterX, centerPoint.getY());
-        return ans;
+    @Override
+    public Ellipse[] divide(){
+        double centerX1 = centerPoint.getX() + (getsMayorAxis()/2)/2;
+        double centerX2 = centerPoint.getX() - (getsMayorAxis()/2)/2;
+        return new Ellipse[] {
+                new Ellipse(new Point(centerX1, centerPoint.getY()), sMayorAxis/2 , sMinorAxis/2),
+                new Ellipse(new Point(centerX2, centerPoint.getY()), sMayorAxis/2 , sMinorAxis/2)
+        };
     }
+
+    @Override
+    public void center(double maxWidth, double maxHeight) {
+        setPosition(maxWidth*0.5 ,maxHeight*0.5);
+    }
+
+
 }

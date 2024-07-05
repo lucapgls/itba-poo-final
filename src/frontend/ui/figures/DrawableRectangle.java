@@ -69,10 +69,18 @@ public class DrawableRectangle<R extends Rectangle> extends DrawableFigure<R> {
             return new DrawableRectangle<>(newRectangle.duplicate(), getColor(), getSecondColor(), getShadow(), getStrokeThickness(), getStrokeStyle());
         }
 
-        @Override
-        public DrawableFigure<? extends Figure> divideFigure() {
+        public DrawableFigure<R>[] divideFigure() {
             R rectangle = getFigure();
-            return new DrawableRectangle<>(rectangle.divide(), getColor(), getSecondColor(), getShadow(), getStrokeThickness(), getStrokeStyle());
+            Rectangle[] divided = rectangle.divide();
+            return new DrawableFigure[]{new DrawableRectangle<>(divided[0], getColor(), getSecondColor(), getShadow(), getStrokeThickness(), getStrokeStyle()),
+                    new DrawableRectangle<>(divided[1], getColor(), getSecondColor(), getShadow(), getStrokeThickness(), getStrokeStyle())};
+
+        }
+
+        @Override
+        public void centerFigure(double maxWidth, double maxHeight) {
+            R rectangle = getFigure();
+            rectangle.center(maxWidth, maxHeight);
         }
 
         @Override

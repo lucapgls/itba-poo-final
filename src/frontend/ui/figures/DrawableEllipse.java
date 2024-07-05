@@ -10,6 +10,9 @@ import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.RadialGradient;
 import javafx.scene.paint.Stop;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 public class DrawableEllipse<E extends Ellipse> extends DrawableFigure<E> {
 
 
@@ -30,29 +33,29 @@ public class DrawableEllipse<E extends Ellipse> extends DrawableFigure<E> {
         switch (getShadow()) {
             case SIMPLE -> {
                 gc.setFill(Color.GRAY);
-                gc.fillOval(ellipse.getCenterPoint().getX() + 10 - (ellipse.getsMayorAxis() / 2),
-                        ellipse.getCenterPoint().getY() + 10 - (ellipse.getsMinorAxis() / 2),
+                gc.fillOval(ellipse.getCenter().getX() + 10 - (ellipse.getsMayorAxis() / 2),
+                        ellipse.getCenter().getY() + 10 - (ellipse.getsMinorAxis() / 2),
                         ellipse.getsMayorAxis(),
                         ellipse.getsMinorAxis());
             }
             case COLORED -> {
                 gc.setFill(getColor().darker());
-                gc.fillOval(ellipse.getCenterPoint().getX() + 10 - (ellipse.getsMayorAxis() / 2),
-                        ellipse.getCenterPoint().getY() + 10 - (ellipse.getsMinorAxis() / 2),
+                gc.fillOval(ellipse.getCenter().getX() + 10 - (ellipse.getsMayorAxis() / 2),
+                        ellipse.getCenter().getY() + 10 - (ellipse.getsMinorAxis() / 2),
                         ellipse.getsMayorAxis(),
                         ellipse.getsMinorAxis());
             }
             case INVERSE_SIMPLE -> {
                 gc.setFill(Color.GRAY);
-                gc.fillOval(ellipse.getCenterPoint().getX() - 10 - (ellipse.getsMayorAxis() / 2),
-                        ellipse.getCenterPoint().getY() - 10 - (ellipse.getsMinorAxis() / 2),
+                gc.fillOval(ellipse.getCenter().getX() - 10 - (ellipse.getsMayorAxis() / 2),
+                        ellipse.getCenter().getY() - 10 - (ellipse.getsMinorAxis() / 2),
                         ellipse.getsMayorAxis(),
                         ellipse.getsMinorAxis());
             }
             case INVERSE_COLORED -> {
                 gc.setFill(getColor().darker());
-                gc.fillOval(ellipse.getCenterPoint().getX() - 10 - (ellipse.getsMayorAxis() / 2),
-                        ellipse.getCenterPoint().getY() - 10 - (ellipse.getsMinorAxis() / 2),
+                gc.fillOval(ellipse.getCenter().getX() - 10 - (ellipse.getsMayorAxis() / 2),
+                        ellipse.getCenter().getY() - 10 - (ellipse.getsMinorAxis() / 2),
                         ellipse.getsMayorAxis(),
                         ellipse.getsMinorAxis());
             }
@@ -70,10 +73,20 @@ public class DrawableEllipse<E extends Ellipse> extends DrawableFigure<E> {
         return new DrawableEllipse<>(ellipse.duplicate(), getColor(), getSecondColor(), getShadow(), getStrokeThickness(), getStrokeStyle());
     }
 
-    @Override
-    public DrawableFigure<? extends Figure> divideFigure(){
+    public DrawableFigure<? extends Figure>[] divideFigure() {
         E ellipse = getFigure();
-        return new DrawableEllipse<>(ellipse.divide(), getColor(), getSecondColor(), getShadow(), getStrokeThickness(), getStrokeStyle());
+        Ellipse[] divided = ellipse.divide();
+        return new DrawableFigure[]{
+                new DrawableEllipse<>(divided[0], getColor(), getSecondColor(), getShadow(), getStrokeThickness(), getStrokeStyle()),
+                new DrawableEllipse<>(divided[1], getColor(), getSecondColor(), getShadow(), getStrokeThickness(), getStrokeStyle())
+        };
+
+    }
+
+    @Override
+    public void centerFigure(double maxWidth, double maxHeight) {
+        E ellipse = getFigure();
+        ellipse.center(maxWidth, maxHeight);
     }
 
     @Override
@@ -89,12 +102,12 @@ public class DrawableEllipse<E extends Ellipse> extends DrawableFigure<E> {
 
         handleSelection(gc);
         gc.setFill(radialGradient);
-        gc.fillOval(ellipse.getCenterPoint().getX() - (ellipse.getsMayorAxis() / 2),
-                    ellipse.getCenterPoint().getY() - (ellipse.getsMinorAxis() / 2),
+        gc.fillOval(ellipse.getCenter().getX() - (ellipse.getsMayorAxis() / 2),
+                    ellipse.getCenter().getY() - (ellipse.getsMinorAxis() / 2),
                     ellipse.getsMayorAxis(),
                     ellipse.getsMinorAxis());
-        gc.strokeOval(ellipse.getCenterPoint().getX() - (ellipse.getsMayorAxis() / 2),
-                ellipse.getCenterPoint().getY() - (ellipse.getsMinorAxis() / 2),
+        gc.strokeOval(ellipse.getCenter().getX() - (ellipse.getsMayorAxis() / 2),
+                ellipse.getCenter().getY() - (ellipse.getsMinorAxis() / 2),
                 ellipse.getsMayorAxis(),
                 ellipse.getsMinorAxis());
     }

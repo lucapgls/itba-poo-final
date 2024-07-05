@@ -1,6 +1,7 @@
 package frontend.ui.figures;
 
 import backend.model.Figure;
+import backend.model.Point;
 import frontend.ui.styles.ShadowEnum;
 import frontend.ui.styles.StrokeStyleEnum;
 import javafx.scene.canvas.GraphicsContext;
@@ -48,27 +49,37 @@ public abstract class DrawableFigure<F extends Figure> {
     }
 
     public void changeColor(Color color) {
-         this.figureColor = color;
+        this.figureColor = color;
     }
 
     public void changeSecondColor(Color color) {
-         this.secondFigureColor = color;
+        this.secondFigureColor = color;
     }
 
 
-    public void updateShadow(ShadowEnum shadow){ this.shadow = shadow; }
+    public void updateShadow(ShadowEnum shadow) {
+        this.shadow = shadow;
+    }
 
-    public void updateStrokeStyle(StrokeStyleEnum stroke){ this.strokeStyle = stroke; }
+    public void updateStrokeStyle(StrokeStyleEnum stroke) {
+        this.strokeStyle = stroke;
+    }
 
-    public void updateStrokeThickness(Double thickness){ this.strokeThickness = thickness; }
+    public void updateStrokeThickness(Double thickness) {
+        this.strokeThickness = thickness;
+    }
 
-    public ShadowEnum getShadow(){
+    public ShadowEnum getShadow() {
         return shadow;
     }
 
-    public StrokeStyleEnum getStrokeStyle(){ return strokeStyle;}
+    public StrokeStyleEnum getStrokeStyle() {
+        return strokeStyle;
+    }
 
-    public Double getStrokeThickness(){ return strokeThickness; }
+    public Double getStrokeThickness() {
+        return strokeThickness;
+    }
 
 
     public void handleSelection(GraphicsContext gc) {
@@ -80,9 +91,15 @@ public abstract class DrawableFigure<F extends Figure> {
     }
 
 
+    public void move(double diffx, double diffy) {
+        this.figure.move(diffx, diffy);
+    }
+
     public abstract DrawableFigure<? extends Figure> duplicateFigure();
 
-    public abstract DrawableFigure<? extends Figure> divideFigure();
+    public abstract DrawableFigure<? extends Figure>[] divideFigure();
+
+    public abstract void centerFigure(double maxWidth, double maxHeight);
 
     public abstract void draw(GraphicsContext gc);
 

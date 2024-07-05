@@ -16,6 +16,17 @@ public abstract class Figure implements Movable, Reachable {
         }
     }
 
-    //public abstract Figure duplicate();
+    public void setPosition(double x, double y) {
+        for (Point p : points) {
+            p.setX(x);
+            p.setY(y);
+        }
+    }
+
+    public abstract Point getCenter();
+
+    public abstract void center(double maxWidth, double maxHeight);
+    public abstract Figure duplicate();
+    public abstract Figure[] divide();
 
 }

@@ -15,13 +15,13 @@ public class Circle extends Ellipse {
 
     @Override
     public String toString() {
-        return String.format("Círculo [Centro: %s, Radio: %.2f]", getCenterPoint(), radius);
+        return String.format("Círculo [Centro: %s, Radio: %.2f]", getCenter(), radius);
     }
 
     @Override
     public boolean isReachable(Point selection) {
-        return Math.sqrt(Math.pow(this.getCenterPoint().getX() - selection.getX(), 2) +
-                Math.pow(this.getCenterPoint().getY() - selection.getY(), 2)) < this.getRadius();
+        return Math.sqrt(Math.pow(this.getCenter().getX() - selection.getX(), 2) +
+                Math.pow(this.getCenter().getY() - selection.getY(), 2)) < this.getRadius();
     }
 
     @Override

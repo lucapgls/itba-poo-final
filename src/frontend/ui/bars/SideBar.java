@@ -169,6 +169,7 @@ public class SideBar extends VBox {
         return deleteButton;
     }
 
+    // TODO remove ui/buttons that have no purpose of being its own class. and avoid casting them to togglebutton
     public ToggleButton getDuplicateButton() {
         return (ToggleButton) actions.getToggles().getFirst();
     }
