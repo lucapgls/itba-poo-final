@@ -171,6 +171,7 @@ public class PaintPane extends BorderPane {
                 DrawableFigure<? extends Figure> newFigure = selectedFigure.divideFigure();
                 canvasState.addFigure(newFigure);
             }
+            redrawCanvas();
         });
 
         sideBar.getColorPickerButton().setOnAction(event -> {
