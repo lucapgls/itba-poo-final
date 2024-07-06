@@ -1,19 +1,15 @@
 package frontend;
 
 
-
 import backend.model.Figure;
 import backend.model.Point;
-import frontend.ui.SelectedSet;
 import frontend.ui.figures.DrawableFigure;
 import frontend.ui.styles.ShadowEnum;
 import frontend.ui.styles.StrokeStyleEnum;
 import javafx.scene.paint.Color;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class CanvasState {
 
@@ -23,7 +19,8 @@ public class CanvasState {
 
     private final List<DrawableFigure<? extends Figure>> list = new ArrayList<>();
 
-    private Set<DrawableFigure<? extends Figure>> selectedList = new SelectedSet<>();
+
+    private DrawableFigure<? extends Figure> selectedFigure = null;
 
     public void addFigure(DrawableFigure figure) {
         list.add(figure);
@@ -34,28 +31,26 @@ public class CanvasState {
     }
 
     public DrawableFigure getSelectedFigure() {
-        if (selectedList.isEmpty())
-            return null;
-        return selectedList.iterator().next();
+        return selectedFigure;
     }
 
 
     public void deleteFigure() {
-        for (DrawableFigure<?extends Figure> figure : figures()){
-            if (selectedList.contains(figure)) {
+        for (DrawableFigure<? extends Figure> figure : figures()) {
+            if (selectedFigure == figure) {
                 list.remove(figure);
             }
         }
-        clearSelectedFigures();
+        clearSelectedFigure();
     }
 
-    public void addSelectedFigures(DrawableFigure<? extends Figure> figure) {
-        selectedList.add(figure);
+    public void addSelectedFigure(DrawableFigure<? extends Figure> figure) {
+        selectedFigure = figure;
     }
 
-    public void updateSelectedFigures(Color color, boolean isPrimaryColor) {
-        for (DrawableFigure<?extends Figure> figure : figures()){
-            if (selectedList.contains(figure)) {
+    public void updateSelectedFigure(Color color, boolean isPrimaryColor) {
+        for (DrawableFigure<? extends Figure> figure : figures()) {
+            if (selectedFigure == figure) {
                 if (isPrimaryColor)
                     figure.changeColor(color);
                 else
@@ -66,22 +61,24 @@ public class CanvasState {
     }
 
 
-    public void clearSelectedFigures() {
-        selectedList.clear();
+    public void clearSelectedFigure() {
+        selectedFigure = null;
+        for (DrawableFigure<? extends Figure> figure : figures()) {
+            figure.setSelected(false);
+        }
     }
 
     public boolean figureBelongs(DrawableFigure<? extends Figure> figure, Point eventPoint) {
         // temp
-            if (figure.getFigure() == null)
-                return false;
-            else
-                return figure.getFigure().isReachable(eventPoint);
+        if (figure.getFigure() == null)
+            return false;
+        else
+            return figure.getFigure().isReachable(eventPoint);
     }
 
 
-
     public boolean noSelection() {
-        return selectedList.isEmpty();
+        return selectedFigure == null;
     }
 
 
@@ -102,13 +99,12 @@ public class CanvasState {
     }
 
     public void updateStrokeThickness(Double thickness) {
-        for (DrawableFigure<?extends Figure> figure : figures()) {
-            if (selectedList.contains(figure)) {
+        for (DrawableFigure<? extends Figure> figure : figures()) {
+            if (selectedFigure == figure) {
                 figure.updateStrokeThickness(thickness);
             }
         }
     }
-
 
 
 }

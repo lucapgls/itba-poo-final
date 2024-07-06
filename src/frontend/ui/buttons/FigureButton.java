@@ -3,10 +3,8 @@ package frontend.ui.buttons;
 import backend.model.Figure;
 import backend.model.Point;
 import frontend.CanvasState;
-import frontend.ui.MouseActions;
 import frontend.ui.figures.DrawableFigure;
 import frontend.ui.figures.FigureFactory;
-import javafx.scene.control.ToggleButton;
 
 public class FigureButton<F extends Figure> extends ActionButton {
     private final FigureFactory<F> factory;
@@ -24,15 +22,16 @@ public class FigureButton<F extends Figure> extends ActionButton {
     @Override
     public void onMousePressed(Point start){
         this.start = start;
-        canvasState.clearSelectedFigures();
+        canvasState.clearSelectedFigure();
     }
 
     @Override
     public void onMouseReleased(Point end) {
 //        figure.update(start, end);
-        canvasState.clearSelectedFigures();
+        canvasState.clearSelectedFigure();
         DrawableFigure<F> drawableFigure = factory.create(start, end);
         canvasState.addFigure(drawableFigure);
-        canvasState.addSelectedFigures(drawableFigure);
+        canvasState.addSelectedFigure(drawableFigure);
+        drawableFigure.setSelected(true);
     }
 }
