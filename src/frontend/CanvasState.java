@@ -18,6 +18,7 @@ public class CanvasState {
 
 
     private final List<DrawableFigure<? extends Figure>> list = new ArrayList<>();
+    private final List<Layer> figureList = new ArrayList<>();
 
 
     private DrawableFigure<? extends Figure> selectedFigure = null;
@@ -34,6 +35,11 @@ public class CanvasState {
     public DrawableFigure getSelectedFigure() {
         return selectedFigure;
     }
+
+    public void addLayer (Layer layer){
+        figureList.add(layer);
+    }
+
 
 
     public void deleteFigure() {
