@@ -121,7 +121,7 @@ public class PaintPane extends BorderPane {
                     sideBar.getColorPickerButton().setValue(selectedFigure.getColor());
                     sideBar.getSecondaryColorPickerButton().setValue(selectedFigure.getSecondColor());
                     sideBar.getShadowButton().setValue(selectedFigure.getShadow());
-                    sideBar.getStrokeButton().setValue(selectedFigure.getStrokeStyle());
+                    sideBar.getStrokeStyleButton().setValue(selectedFigure.getStrokeStyle());
                     sideBar.getStrokeSlider().setValue(selectedFigure.getStrokeThickness());
                 }
             }

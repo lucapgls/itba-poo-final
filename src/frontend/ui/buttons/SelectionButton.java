@@ -26,11 +26,14 @@ public class SelectionButton extends ActionButton {
         start = point;
         end = point;
         canvasState.clearSelectedFigure();
+        boolean selected = false;
         for (DrawableFigure<? extends Figure> figure : canvasState.figures()) {
-            if (figure.getFigure().isReachable(start)) {
+            if (figure.getFigure().isReachable(start) && !selected) {
 
                 canvasState.addSelectedFigure(figure);
                 figure.setSelected(true);
+                selected = true;
+
             } else {
                 figure.setSelected(false);
             }

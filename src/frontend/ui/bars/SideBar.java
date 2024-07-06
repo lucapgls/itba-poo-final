@@ -166,6 +166,7 @@ public class SideBar extends VBox {
         return secondaryColorPicker;
     }
 
+
     public ToggleButton getDeleteButton() {
         return deleteButton;
     }

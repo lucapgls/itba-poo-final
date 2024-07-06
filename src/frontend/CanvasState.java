@@ -84,7 +84,7 @@ public class CanvasState {
 
     public void updateShadow(ShadowEnum shadow) {
         for (DrawableFigure<?extends Figure> figure : figures()) {
-            if (selectedList.contains(figure)) {
+            if (selectedFigure == figure) {
                 figure.updateShadow(shadow);
             }
         }
@@ -92,7 +92,7 @@ public class CanvasState {
 
     public void updateStrokeStyle(StrokeStyleEnum strokeStyle) {
         for (DrawableFigure<?extends Figure> figure : figures()) {
-            if (selectedList.contains(figure)) {
+            if (selectedFigure == figure) {
                 figure.updateStrokeStyle(strokeStyle);
             }
         }
