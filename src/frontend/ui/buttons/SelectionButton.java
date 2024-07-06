@@ -6,6 +6,11 @@ import backend.model.Rectangle;
 import frontend.CanvasState;
 import frontend.ui.figures.DrawableFigure;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 public class SelectionButton extends ActionButton {
 
     private static final String BUTTON_NAME = "Seleccionar";
@@ -27,13 +32,17 @@ public class SelectionButton extends ActionButton {
         end = point;
         canvasState.clearSelectedFigure();
         boolean selected = false;
-        for (DrawableFigure<? extends Figure> figure : canvasState.figures()) {
-            if (figure.getFigure().isReachable(start) && !selected) {
 
+        // Step 1: Create a temporary list to hold the figures in reverse order
+        List<DrawableFigure<? extends Figure>> auxList = new ArrayList<>((Collection) canvasState.figures());
+        Collections.reverse(auxList); // Reverse the order of elements in auxList
+
+        // Step 2 & 3: Iterate over auxList in reverse order
+        for (DrawableFigure<? extends Figure> figure : auxList) {
+            if (figure.getFigure().isReachable(start) && !selected) {
                 canvasState.addSelectedFigure(figure);
                 figure.setSelected(true);
                 selected = true;
-
             } else {
                 figure.setSelected(false);
             }
