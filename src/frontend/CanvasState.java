@@ -24,6 +24,7 @@ public class CanvasState {
 
     public void addFigure(DrawableFigure figure) {
         list.add(figure);
+
     }
 
     public Iterable<DrawableFigure<? extends Figure>> figures() {
