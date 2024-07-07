@@ -240,9 +240,9 @@ public class PaintPane extends BorderPane {
             String name = topBar.getLayerButton().getValue(); // Assuming getValue() returns a string like "Capa 2"
             int num = getLayerByName(name); // Assuming getLayerByName() returns the number of the layer (2 in this case
 
-            sideBar.setLayer(num-1);
+            sideBar.setLayer(num);
 
-            topBar.setRadioButtons(canvasState.getLayerList().get(num-1).isShown());
+            topBar.setRadioButtons(canvasState.getLayerList().get(num).isShown());
 
 
         });
