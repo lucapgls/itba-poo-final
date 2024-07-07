@@ -10,7 +10,7 @@ public class LayerButton extends DropDownButton<String> {
 
     public LayerButton(int layers) {
         super(BUTTON_NAME);
-        for(int i = 0; i< layers; i++){
+        for(int i = 1; i<= layers; i++){
             getItems().add("Capa " + (i) ) ;
         }
         setValue(getItems().getFirst());

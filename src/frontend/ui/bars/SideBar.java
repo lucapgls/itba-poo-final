@@ -34,6 +34,16 @@ public class SideBar extends VBox {
     private final ChoiceBox<StrokeStyleEnum> strokeStyleButton = new StrokeButton();
     private final Slider strokeSlider = new StrokeSlider();
 
+    private FigureButton<Rectangle> rectangleButton;
+    private FigureButton<Ellipse> ellipseButton;
+    private FigureButton<Square> squareButton;
+    private FigureButton<Circle> circleButton;
+
+
+
+    private int currentLayer = 0;
+
+
     //Labels
     Label toolsLabel = new Label("Herramientas");
     Label shadowLabel = new Label("Sombra");
@@ -105,26 +115,31 @@ public class SideBar extends VBox {
     }
 
     private ToggleButton[] getToggleButtons(CanvasState canvasState) {
-        FigureButton<Rectangle> rectangleButton = new FigureButton<>("Rectángulo", canvasState,
+        FigureButton<Rectangle> rectangleButton = new FigureButton<>("Rectángulo", canvasState, currentLayer,
                 (start, end) -> new DrawableRectangle<>(new Rectangle(start, end),fillColorPicker.getValue(), secondaryColorPicker.getValue(), shadowButton.getValue(), strokeSlider.getValue(), strokeStyleButton.getValue())
         );
 
-        FigureButton<Ellipse> ellipseButton = new FigureButton<>("Elipse", canvasState,
+        FigureButton<Ellipse> ellipseButton = new FigureButton<>("Elipse", canvasState, currentLayer,
                 (start, end) -> new DrawableEllipse<>(new Ellipse(
                     new Point(Math.abs(end.getX() + start.getX()) / 2, (Math.abs((end.getY() + start.getY())) / 2)),
                     Math.abs(end.getX() - start.getX()),
                     Math.abs(end.getY() - start.getY())), fillColorPicker.getValue(), secondaryColorPicker.getValue(), shadowButton.getValue(), strokeSlider.getValue(), strokeStyleButton.getValue())
         );
 
-        FigureButton<Square> squareButton = new FigureButton<>("Cuadrado", canvasState,
+        FigureButton<Square> squareButton = new FigureButton<>("Cuadrado", canvasState, currentLayer,
                 (start, end) -> new DrawableRectangle<>(new Square(start, end.getX() - start.getX()),
                 fillColorPicker.getValue(), secondaryColorPicker.getValue(), shadowButton.getValue(), strokeSlider.getValue(), strokeStyleButton.getValue())
         );
 
-        FigureButton<Circle> circleButton = new FigureButton<>("Círculo", canvasState,
+        FigureButton<Circle> circleButton = new FigureButton<>("Círculo", canvasState, currentLayer,
                 (start, end) -> new DrawableEllipse<>(new Circle(start, end.getX() - start.getX()),
                         fillColorPicker.getValue(), secondaryColorPicker.getValue(), shadowButton.getValue(), strokeSlider.getValue(), strokeStyleButton.getValue())
         );
+
+        this.rectangleButton = rectangleButton;
+        this.ellipseButton = ellipseButton;
+        this.squareButton = squareButton;
+        this.circleButton = circleButton;
 
         // Other buttons
         SelectionButton selectionButton = new SelectionButton(canvasState);

@@ -2,6 +2,7 @@ package frontend;
 
 import backend.model.*;
 import frontend.ui.bars.SideBar;
+import frontend.ui.bars.TopBar;
 import frontend.ui.buttons.ActionButton;
 import frontend.ui.figures.DrawableFigure;
 
@@ -32,12 +33,14 @@ public class PaintPane extends BorderPane {
     // Colores de relleno de cada figura
 
     private final SideBar sideBar;
+    private final TopBar topBar;
 
     public PaintPane(CanvasState canvasState, StatusPane statusPane) {
         this.canvasState = canvasState;
         //  this.statusPane = statusPane;
 
         sideBar = new SideBar(canvasState);
+        topBar = new TopBar(canvasState);
 
         gc.setLineWidth(1);
 
@@ -122,6 +125,7 @@ public class PaintPane extends BorderPane {
                     sideBar.getStrokeStyleButton().setValue(selectedFigure.getStrokeStyle());
                     sideBar.getStrokeSlider().setValue(selectedFigure.getStrokeThickness());
                 }
+
             }
 
 //            if (found) {
@@ -162,7 +166,7 @@ public class PaintPane extends BorderPane {
             DrawableFigure<? extends Figure> selectedFigure = canvasState.getSelectedFigure();
             if (selectedFigure != null) {
                 DrawableFigure<? extends Figure> newFigure = selectedFigure.duplicateFigure();
-                canvasState.addFigure(newFigure);
+                //    canvasState.addFigure(newFigure);
             }
             redrawCanvas();
         });
@@ -174,8 +178,8 @@ public class PaintPane extends BorderPane {
             DrawableFigure<? extends Figure> selectedFigure = canvasState.getSelectedFigure();
             if (selectedFigure != null) {
                 DrawableFigure<? extends Figure>[] newFigures = selectedFigure.divideFigure();
-                canvasState.addFigure(newFigures[0]);
-                canvasState.addFigure(newFigures[1]);
+                //  canvasState.addFigure(newFigures[0]);
+                //  canvasState.addFigure(newFigures[1]);
                 canvasState.deleteFigure();
             }
             redrawCanvas();
@@ -217,8 +221,35 @@ public class PaintPane extends BorderPane {
             redrawCanvas();
         });
 
+        topBar.getLayerButton().setOnAction(event -> {
+            String valueStr = topBar.getLayerButton().getValue(); // Assuming getValue() returns a string like "Capa 2"
+            Pattern pattern = Pattern.compile("\\d+"); // Regular expression to find numbers
+            Matcher matcher = pattern.matcher(valueStr);
+
+            int num = 0;
+            if (matcher.find()) {
+                num = Integer.parseInt(matcher.group()); // Convert the first occurrence of number string to integer
+            }
+
+            sideBar.setLayer(num-1);
+
+            topBar.setRadioButtons(canvasState.getFigureList().get(num-1).isShown());
 
 
+        });
+
+        topBar.getShowLayer().setOnAction(event -> {
+            topBar.ShowLayer();
+            redrawCanvas();
+        });
+
+        topBar.getHideLayer().setOnAction(event -> {
+            topBar.HideLayer();
+            redrawCanvas();
+        });
+
+
+        setTop(topBar);
         setLeft(sideBar);
         setRight(canvas);
 

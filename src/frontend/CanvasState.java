@@ -27,9 +27,11 @@ public class CanvasState {
         figureList.get(layer).add(figure);
     }
 
+
     public Iterable<DrawableFigure<? extends Figure>> figures() {
         return new ArrayList<>(list);
     }
+
 
     public DrawableFigure getSelectedFigure() {
         return selectedFigure;

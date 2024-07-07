@@ -10,12 +10,14 @@ public class FigureButton<F extends Figure> extends ActionButton {
     private final FigureFactory<F> factory;
     private Point start;
     private final CanvasState canvasState;
+    private int layer;
 
     // new FigureButton("Cuadrado", canvasState, (start, end) -> new Square(start, end.getX() - start.getX())
 
-    public FigureButton(String name, CanvasState canvasState, FigureFactory<F> factory) {
+    public FigureButton(String name, CanvasState canvasState, int layer,FigureFactory<F> factory) {
         super(name);
         this.canvasState = canvasState;
+        this.layer = layer;
         this.factory = factory;
     }
 
@@ -25,12 +27,17 @@ public class FigureButton<F extends Figure> extends ActionButton {
         canvasState.clearSelectedFigure();
     }
 
+    public void setLayer(int layer){
+        this.layer = layer;
+    }
+
     @Override
     public void onMouseReleased(Point end) {
 //        figure.update(start, end);
+        System.out.println(layer);
         canvasState.clearSelectedFigure();
         DrawableFigure<F> drawableFigure = factory.create(start, end);
-        canvasState.addFigure(drawableFigure);
+        canvasState.addFigure(drawableFigure, layer);
         canvasState.addSelectedFigure(drawableFigure);
         drawableFigure.setSelected(true);
     }
