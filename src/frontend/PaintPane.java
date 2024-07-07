@@ -242,7 +242,7 @@ public class PaintPane extends BorderPane {
 
             sideBar.setLayer(num-1);
 
-            topBar.setRadioButtons(canvasState.getFigureList().get(num-1).isShown());
+            topBar.setRadioButtons(canvasState.getLayerList().get(num-1).isShown());
 
 
         });
@@ -268,7 +268,7 @@ public class PaintPane extends BorderPane {
     void redrawCanvas() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-        for (Layer layer : canvasState.getFigureListToShow()) {
+        for (Layer layer : canvasState.getLayerListToShow()) {
             for (DrawableFigure<? extends Figure> figure : layer) {
                 figure.draw(gc);
             }

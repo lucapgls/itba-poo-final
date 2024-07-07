@@ -6,6 +6,7 @@ import frontend.ui.buttons.LayerButton;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.layout.HBox;
 
@@ -20,25 +21,37 @@ public class TopBar extends HBox {
 
     private final RadioButton showLayer = new RadioButton("Mostrar");
     private final RadioButton hideLayer = new RadioButton("Ocultar");
+    Label layersLabel = new Label("Capas");
+
 
     public TopBar(CanvasState canvasState) {
         this.canvasState = canvasState;
         layerChoiceBox = new LayerButton(3);
         setPadding(new Insets(3));
         setStyle("-fx-background-color: #282828");
+
+        getChildren().add(layersLabel);
+        layersLabel.setStyle("-fx-text-fill: white");
+        HBox.setMargin(layersLabel, new Insets(0, 8, 0, 0));
         getChildren().add(layerChoiceBox);
+
+        HBox.setMargin(layerChoiceBox, new Insets(0, 15, 0, 0));
+
         getChildren().add(showLayer);
         showLayer.setStyle("-fx-text-fill: white");
+
+        HBox.setMargin(showLayer, new Insets(0, 15, 0, 0));
+
         getChildren().add(hideLayer);
         hideLayer.setStyle("-fx-text-fill: white");
         setAlignment(Pos.CENTER);
 
-        canvasState.getFigureList().add(new Layer("Capa 1"));
-        canvasState.getFigureList().add(new Layer("Capa 2"));
-        canvasState.getFigureList().add(new Layer("Capa 3"));
+        canvasState.getLayerList().add(new Layer("Capa 1"));
+        canvasState.getLayerList().add(new Layer("Capa 2"));
+        canvasState.getLayerList().add(new Layer("Capa 3"));
 
         // Use get(0) instead of getFirst()
-        showLayer.setSelected(canvasState.getFigureList().getFirst().isShown());
+        showLayer.setSelected(canvasState.getLayerList().getFirst().isShown());
     }
 
     public ChoiceBox<String> getLayerButton() {
@@ -65,9 +78,9 @@ public class TopBar extends HBox {
         int num = getLayerByName(name);
 
         if(hideLayer.isSelected())
-        canvasState.getFigureList().get(num-1).hide();
+        canvasState.getLayerList().get(num-1).hide();
         else if(!hideLayer.isSelected())
-        canvasState.getFigureList().get(num-1).show();
+        canvasState.getLayerList().get(num-1).show();
 
     }
 
@@ -77,9 +90,9 @@ public class TopBar extends HBox {
         int num = getLayerByName(name);
 
         if(showLayer.isSelected())
-        canvasState.getFigureList().get(num-1).show();
+        canvasState.getLayerList().get(num-1).show();
         else if(!showLayer.isSelected())
-        canvasState.getFigureList().get(num-1).hide();
+        canvasState.getLayerList().get(num-1).hide();
 
     }
 

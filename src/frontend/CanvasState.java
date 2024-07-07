@@ -19,18 +19,24 @@ public class CanvasState {
 
 
     private final List<DrawableFigure<? extends Figure>> list = new ArrayList<>();
-    private final List<Layer> figureList = new ArrayList<>();
+    private final List<Layer> layerList = new ArrayList<>();
 
 
     private DrawableFigure<? extends Figure> selectedFigure = null;
 
     public void addFigure(DrawableFigure figure, int layer) {
-        figureList.get(layer).add(figure);
+        layerList.get(layer).add(figure);
     }
 
 
-    public Iterable<DrawableFigure<? extends Figure>> figures() {
-        return new ArrayList<>(list);
+    public List<DrawableFigure<? extends Figure>> figures() {
+        List<DrawableFigure<? extends Figure>> shownFigures = new ArrayList<>();
+        for (Layer layer : layerList) {
+            if (layer.isShown()) {
+                shownFigures.addAll(layer);
+            }
+        }
+        return shownFigures;
     }
 
 
@@ -39,12 +45,12 @@ public class CanvasState {
     }
 
     public void addLayer(Layer layer) {
-        figureList.add(layer);
+        layerList.add(layer);
     }
 
 
     public void deleteFigure(int index) {
-        Layer layer = figureList.get(index);
+        Layer layer = layerList.get(index);
         Iterator<DrawableFigure<? extends Figure>> iterator = layer.iterator();
         while (iterator.hasNext()) {
             DrawableFigure<? extends Figure> figure = iterator.next();
@@ -60,7 +66,7 @@ public class CanvasState {
     }
 
     public void updateSelectedFigure(Color color, int layer, boolean isPrimaryColor) {
-        for (DrawableFigure<? extends Figure> figure : getFigureList().get(layer)) {
+        for (DrawableFigure<? extends Figure> figure : getLayerList().get(layer)) {
             if (selectedFigure == figure) {
                 if (isPrimaryColor)
                     figure.changeColor(color);
@@ -94,7 +100,7 @@ public class CanvasState {
 
 
     public void updateShadow(ShadowEnum shadow, int layer) {
-        for (DrawableFigure<? extends Figure> figure : getFigureList().get(layer)) {
+        for (DrawableFigure<? extends Figure> figure : getLayerList().get(layer)) {
             if (selectedFigure == figure) {
                 figure.updateShadow(shadow);
             }
@@ -102,7 +108,7 @@ public class CanvasState {
     }
 
     public void updateStrokeStyle(StrokeStyleEnum strokeStyle, int layer) {
-        for (DrawableFigure<? extends Figure> figure :getFigureList().get(layer)) {
+        for (DrawableFigure<? extends Figure> figure : getLayerList().get(layer)) {
             if (selectedFigure == figure) {
                 figure.updateStrokeStyle(strokeStyle);
             }
@@ -110,16 +116,16 @@ public class CanvasState {
     }
 
     public void updateStrokeThickness(Double thickness, int layer) {
-        for (DrawableFigure<? extends Figure> figure : getFigureList().get(layer)) {
+        for (DrawableFigure<? extends Figure> figure : getLayerList().get(layer)) {
             if (selectedFigure == figure) {
                 figure.updateStrokeThickness(thickness);
             }
         }
     }
 
-    public List<Layer> getFigureListToShow() {
+    public List<Layer> getLayerListToShow() {
         List<Layer> ans = new ArrayList<>();
-        for(Layer layer : figureList){
+        for(Layer layer : layerList){
             if(layer.isShown()){
                 ans.add(layer);
             }
@@ -127,12 +133,12 @@ public class CanvasState {
         return ans;
     }
 
-    public List<Layer> getFigureList() {
-        return figureList;
+    public List<Layer> getLayerList() {
+        return layerList;
     }
 
     public void updateLayerVisibility(String name) {
-        for(Layer layer : figureList){
+        for(Layer layer : layerList){
             if(layer.name.equals(name)){
                 if(layer.isShown()){
                     layer.hide();
