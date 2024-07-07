@@ -58,35 +58,40 @@ public class TopBar extends HBox {
         hideLayer.setSelected(!show);
     }
 
+
     public void HideLayer() {
-        showLayer.setSelected(false);
-        String valueStr = getLayerButton().getValue(); // Assuming getValue() returns a string like "Capa 2"
-        Pattern pattern = Pattern.compile("\\d+"); // Regular expression to find numbers
-        Matcher matcher = pattern.matcher(valueStr);
+        showLayer.setSelected(!showLayer.isSelected());
+        String name = getLayerButton().getValue(); // Assuming getValue() returns a string like "Capa 2"
+        int num = getLayerByName(name);
 
-        int num = 0;
-        if (matcher.find()) {
-            num = Integer.parseInt(matcher.group()); // Convert the first occurrence of number string to integer
-        }
-
-
+        if(hideLayer.isSelected())
         canvasState.getFigureList().get(num-1).hide();
-    }
-
-    public void ShowLayer() {
-        hideLayer.setSelected(false);
-        String valueStr = getLayerButton().getValue(); // Assuming getValue() returns a string like "Capa 2"
-        Pattern pattern = Pattern.compile("\\d+"); // Regular expression to find numbers
-        Matcher matcher = pattern.matcher(valueStr);
-
-        int num = 0;
-        if (matcher.find()) {
-            num = Integer.parseInt(matcher.group()); // Convert the first occurrence of number string to integer
-        }
-
+        else if(!hideLayer.isSelected())
         canvasState.getFigureList().get(num-1).show();
 
     }
 
+    public void ShowLayer() {
+        hideLayer.setSelected(!showLayer.isSelected());
+        String name = getLayerButton().getValue(); // Assuming getValue() returns a string like "Capa 2"
+        int num = getLayerByName(name);
+
+        if(showLayer.isSelected())
+        canvasState.getFigureList().get(num-1).show();
+        else if(!showLayer.isSelected())
+        canvasState.getFigureList().get(num-1).hide();
+
+    }
+
+    private int getLayerByName(String name){
+        Pattern pattern = Pattern.compile("\\d+"); // Regular expression to find numbers
+        Matcher matcher = pattern.matcher(name);
+
+        int num = 0;
+        if (matcher.find()) {
+            num = Integer.parseInt(matcher.group()); // Convert the first occurrence of number string to integer
+        }
+        return num;
+    }
 
 }

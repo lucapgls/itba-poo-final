@@ -155,8 +155,9 @@ public class PaintPane extends BorderPane {
         sideBar.getDeleteButton().setOnAction(event -> {
 
             noSelectionAlert(canvasState);
-
-            canvasState.deleteFigure();
+            String name = topBar.getLayerButton().getValue(); // Assuming getValue() returns a string like "Capa 2"
+            int num = getLayerByName(name);
+            canvasState.deleteFigure(num);
             redrawCanvas();
         });
 
@@ -165,8 +166,10 @@ public class PaintPane extends BorderPane {
 
             DrawableFigure<? extends Figure> selectedFigure = canvasState.getSelectedFigure();
             if (selectedFigure != null) {
+                String name = topBar.getLayerButton().getValue(); // Assuming getValue() returns a string like "Capa 2"
+                int num = getLayerByName(name);
                 DrawableFigure<? extends Figure> newFigure = selectedFigure.duplicateFigure();
-                //    canvasState.addFigure(newFigure);
+                canvasState.addFigure(newFigure, num -1);
             }
             redrawCanvas();
         });
@@ -177,10 +180,12 @@ public class PaintPane extends BorderPane {
 
             DrawableFigure<? extends Figure> selectedFigure = canvasState.getSelectedFigure();
             if (selectedFigure != null) {
+                String name = topBar.getLayerButton().getValue(); // Assuming getValue() returns a string like "Capa 2"
+                int num = getLayerByName(name);
                 DrawableFigure<? extends Figure>[] newFigures = selectedFigure.divideFigure();
-                //  canvasState.addFigure(newFigures[0]);
-                //  canvasState.addFigure(newFigures[1]);
-                canvasState.deleteFigure();
+                  canvasState.addFigure(newFigures[0], num);
+                  canvasState.addFigure(newFigures[1], num);
+                canvasState.deleteFigure(num);
             }
             redrawCanvas();
         });
@@ -197,39 +202,43 @@ public class PaintPane extends BorderPane {
         });
 
         sideBar.getColorPickerButton().setOnAction(event -> {
-            canvasState.updateSelectedFigure(sideBar.getColorPicker(), true);
+            String name = topBar.getLayerButton().getValue(); // Assuming getValue() returns a string like "Capa 2"
+            int num = getLayerByName(name);
+            canvasState.updateSelectedFigure(sideBar.getColorPicker(), num, true);
             redrawCanvas();
         });
 
         sideBar.getSecondaryColorPickerButton().setOnAction(event -> {
-            canvasState.updateSelectedFigure(sideBar.getSecondaryColorPicker(), false);
+            String name = topBar.getLayerButton().getValue(); // Assuming getValue() returns a string like "Capa 2"
+            int num = getLayerByName(name);
+            canvasState.updateSelectedFigure(sideBar.getSecondaryColorPicker(), num, false);
             redrawCanvas();
         });
 
         sideBar.getShadowButton().setOnAction(event -> {
-            canvasState.updateShadow(sideBar.getShadowButton().getValue());
+            String name = topBar.getLayerButton().getValue(); // Assuming getValue() returns a string like "Capa 2"
+            int num = getLayerByName(name);
+            canvasState.updateShadow(sideBar.getShadowButton().getValue(), num);
             redrawCanvas();
         });
 
         sideBar.getStrokeStyleButton().setOnAction(event -> {
-            canvasState.updateStrokeStyle(sideBar.getStrokeStyleButton().getValue());
+            String name = topBar.getLayerButton().getValue(); // Assuming getValue() returns a string like "Capa 2"
+            int num = getLayerByName(name);
+            canvasState.updateStrokeStyle(sideBar.getStrokeStyleButton().getValue(), num);
             redrawCanvas();
         });
 
         sideBar.getStrokeSlider().setOnMouseReleased(event -> {
-            canvasState.updateStrokeThickness(sideBar.getStrokeSlider().getValue());
+            String name = topBar.getLayerButton().getValue(); // Assuming getValue() returns a string like "Capa 2"
+            int num = getLayerByName(name);
+            canvasState.updateStrokeThickness(sideBar.getStrokeSlider().getValue(), num);
             redrawCanvas();
         });
 
         topBar.getLayerButton().setOnAction(event -> {
-            String valueStr = topBar.getLayerButton().getValue(); // Assuming getValue() returns a string like "Capa 2"
-            Pattern pattern = Pattern.compile("\\d+"); // Regular expression to find numbers
-            Matcher matcher = pattern.matcher(valueStr);
-
-            int num = 0;
-            if (matcher.find()) {
-                num = Integer.parseInt(matcher.group()); // Convert the first occurrence of number string to integer
-            }
+            String name = topBar.getLayerButton().getValue(); // Assuming getValue() returns a string like "Capa 2"
+            int num = getLayerByName(name); // Assuming getLayerByName() returns the number of the layer (2 in this case
 
             sideBar.setLayer(num-1);
 
@@ -279,6 +288,17 @@ public class PaintPane extends BorderPane {
         alert.setHeaderText(message);
         alert.setContentText("TPE Final POO Julio 2024");
         alert.showAndWait();
+    }
+
+    private int getLayerByName(String name){
+        Pattern pattern = Pattern.compile("\\d+"); // Regular expression to find numbers
+        Matcher matcher = pattern.matcher(name);
+
+        int num = 0;
+        if (matcher.find()) {
+             num = Integer.parseInt(matcher.group()); // Convert the first occurrence of number string to integer
+        }
+        return num - 1;
     }
 
 

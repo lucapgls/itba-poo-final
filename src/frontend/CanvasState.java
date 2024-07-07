@@ -9,6 +9,7 @@ import frontend.ui.styles.StrokeStyleEnum;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class CanvasState {
@@ -42,10 +43,13 @@ public class CanvasState {
     }
 
 
-    public void deleteFigure() {
-        for (DrawableFigure<? extends Figure> figure : figures()) {
+    public void deleteFigure(int index) {
+        Layer layer = figureList.get(index);
+        Iterator<DrawableFigure<? extends Figure>> iterator = layer.iterator();
+        while (iterator.hasNext()) {
+            DrawableFigure<? extends Figure> figure = iterator.next();
             if (selectedFigure == figure) {
-                list.remove(figure);
+                iterator.remove();
             }
         }
         clearSelectedFigure();
@@ -55,8 +59,8 @@ public class CanvasState {
         selectedFigure = figure;
     }
 
-    public void updateSelectedFigure(Color color, boolean isPrimaryColor) {
-        for (DrawableFigure<? extends Figure> figure : figures()) {
+    public void updateSelectedFigure(Color color, int layer, boolean isPrimaryColor) {
+        for (DrawableFigure<? extends Figure> figure : getFigureList().get(layer)) {
             if (selectedFigure == figure) {
                 if (isPrimaryColor)
                     figure.changeColor(color);
@@ -89,24 +93,24 @@ public class CanvasState {
     }
 
 
-    public void updateShadow(ShadowEnum shadow) {
-        for (DrawableFigure<? extends Figure> figure : figures()) {
+    public void updateShadow(ShadowEnum shadow, int layer) {
+        for (DrawableFigure<? extends Figure> figure : getFigureList().get(layer)) {
             if (selectedFigure == figure) {
                 figure.updateShadow(shadow);
             }
         }
     }
 
-    public void updateStrokeStyle(StrokeStyleEnum strokeStyle) {
-        for (DrawableFigure<? extends Figure> figure : figures()) {
+    public void updateStrokeStyle(StrokeStyleEnum strokeStyle, int layer) {
+        for (DrawableFigure<? extends Figure> figure :getFigureList().get(layer)) {
             if (selectedFigure == figure) {
                 figure.updateStrokeStyle(strokeStyle);
             }
         }
     }
 
-    public void updateStrokeThickness(Double thickness) {
-        for (DrawableFigure<? extends Figure> figure : figures()) {
+    public void updateStrokeThickness(Double thickness, int layer) {
+        for (DrawableFigure<? extends Figure> figure : getFigureList().get(layer)) {
             if (selectedFigure == figure) {
                 figure.updateStrokeThickness(thickness);
             }

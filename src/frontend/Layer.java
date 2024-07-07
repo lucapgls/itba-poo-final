@@ -4,8 +4,7 @@ import backend.model.Figure;
 import frontend.ui.figures.DrawableFigure;
 
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 public class Layer extends ArrayList<DrawableFigure<? extends Figure>> {
 
