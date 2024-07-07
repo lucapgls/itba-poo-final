@@ -8,23 +8,22 @@ import java.util.ArrayList;
 public class Layer extends ArrayList<DrawableFigure<? extends Figure>> {
 
     private boolean showLayer = true;
+    String name;
 
-    public Layer(){
-
+    public Layer(String name) {
+        this.name = name;
     }
 
-  public void show(){
+    public void show() {
         this.showLayer = true;
-  }
+    }
 
-  public void hide(){
+    public void hide() {
         this.showLayer = false;
-  }
+    }
 
-  public boolean isShown(){
+    public boolean isShown() {
         return this.showLayer;
-  }
-
-
+    }
 
 }

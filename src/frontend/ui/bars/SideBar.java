@@ -183,4 +183,15 @@ public class SideBar extends VBox {
     public ToggleButton getCenterButton(){ 
         return (ToggleButton) actions.getToggles().get(2);
     }
+
+    public void setLayer(int layer){
+        this.currentLayer = layer;
+        squareButton.setLayer(layer);
+        rectangleButton.setLayer(layer);
+        ellipseButton.setLayer(layer);
+        circleButton.setLayer(layer);
     }
+
+}
+
+

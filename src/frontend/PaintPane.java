@@ -9,10 +9,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PaintPane extends BorderPane {
 
@@ -22,7 +21,6 @@ public class PaintPane extends BorderPane {
     // Canvas y relacionados
     private final Canvas canvas = new Canvas(800, 600);
     private final GraphicsContext gc = canvas.getGraphicsContext2D();
-
 
 
     // Dibujar una figura
@@ -170,8 +168,8 @@ public class PaintPane extends BorderPane {
         });
 
 
-        sideBar.getDivideButton().setOnAction(event-> {
-           noSelectionAlert(canvasState);
+        sideBar.getDivideButton().setOnAction(event -> {
+            noSelectionAlert(canvasState);
 
             DrawableFigure<? extends Figure> selectedFigure = canvasState.getSelectedFigure();
             if (selectedFigure != null) {
@@ -200,7 +198,7 @@ public class PaintPane extends BorderPane {
         });
 
         sideBar.getSecondaryColorPickerButton().setOnAction(event -> {
-            canvasState.updateSelectedFigure(sideBar.getSecondaryColorPicker() , false);
+            canvasState.updateSelectedFigure(sideBar.getSecondaryColorPicker(), false);
             redrawCanvas();
         });
 
@@ -230,14 +228,14 @@ public class PaintPane extends BorderPane {
     void redrawCanvas() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-        for (DrawableFigure<? extends Figure> figure : canvasState.figures()) {
-
-            figure.draw(gc);
-
+        for (Layer layer : canvasState.getFigureListToShow()) {
+            for (DrawableFigure<? extends Figure> figure : layer) {
+                figure.draw(gc);
+            }
         }
     }
 
-    private void noSelectionAlert(CanvasState c){
+    private void noSelectionAlert(CanvasState c) {
         if (c.noSelection()) {
             alertInfo("No hay figuras seleccionadas");
             return;

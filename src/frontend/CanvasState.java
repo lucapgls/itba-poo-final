@@ -23,9 +23,8 @@ public class CanvasState {
 
     private DrawableFigure<? extends Figure> selectedFigure = null;
 
-    public void addFigure(DrawableFigure figure) {
-        list.add(figure);
-
+    public void addFigure(DrawableFigure figure, int layer) {
+        figureList.get(layer).add(figure);
     }
 
     public Iterable<DrawableFigure<? extends Figure>> figures() {
@@ -36,10 +35,9 @@ public class CanvasState {
         return selectedFigure;
     }
 
-    public void addLayer (Layer layer){
+    public void addLayer(Layer layer) {
         figureList.add(layer);
     }
-
 
 
     public void deleteFigure() {
@@ -90,7 +88,7 @@ public class CanvasState {
 
 
     public void updateShadow(ShadowEnum shadow) {
-        for (DrawableFigure<?extends Figure> figure : figures()) {
+        for (DrawableFigure<? extends Figure> figure : figures()) {
             if (selectedFigure == figure) {
                 figure.updateShadow(shadow);
             }
@@ -98,7 +96,7 @@ public class CanvasState {
     }
 
     public void updateStrokeStyle(StrokeStyleEnum strokeStyle) {
-        for (DrawableFigure<?extends Figure> figure : figures()) {
+        for (DrawableFigure<? extends Figure> figure : figures()) {
             if (selectedFigure == figure) {
                 figure.updateStrokeStyle(strokeStyle);
             }
@@ -112,6 +110,33 @@ public class CanvasState {
             }
         }
     }
+
+    public List<Layer> getFigureListToShow() {
+        List<Layer> ans = new ArrayList<>();
+        for(Layer layer : figureList){
+            if(layer.isShown()){
+                ans.add(layer);
+            }
+        }
+        return ans;
+    }
+
+    public List<Layer> getFigureList() {
+        return figureList;
+    }
+
+    public void updateLayerVisibility(String name) {
+        for(Layer layer : figureList){
+            if(layer.name.equals(name)){
+                if(layer.isShown()){
+                    layer.hide();
+                }else{
+                    layer.show();
+                }
+            }
+        }
+    }
+
 
 
 }
