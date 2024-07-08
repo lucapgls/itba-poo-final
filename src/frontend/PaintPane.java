@@ -242,7 +242,7 @@ public class PaintPane extends BorderPane {
 
             sideBar.setLayer(index);
 
-            topBar.setRadioButtons(canvasState.getLayerList().get(num).isShown());
+            topBar.setRadioButtons(canvasState.getLayerList().get(index).isShown());
 
 
         });
