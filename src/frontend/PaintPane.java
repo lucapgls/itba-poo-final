@@ -154,9 +154,7 @@ public class PaintPane extends BorderPane {
         sideBar.getDeleteButton().setOnAction(event -> {
 
             noSelectionAlert(canvasState);
-            String name = topBar.getLayerButton().getValue(); // Assuming getValue() returns a string like "Capa 2"
-            int num = getLayerIndexByName(name);
-            canvasState.deleteFigure(num);
+            canvasState.deleteFigure();
             redrawCanvas();
         });
 
@@ -166,7 +164,7 @@ public class PaintPane extends BorderPane {
             DrawableFigure<? extends Figure> selectedFigure = canvasState.getSelectedFigure();
             if (selectedFigure != null) {
                 String name = topBar.getLayerButton().getValue(); // Assuming getValue() returns a string like "Capa 2"
-                int num = getLayerIndexByName(name);
+                int index = getLayerIndexByName(name);
                 DrawableFigure<? extends Figure> newFigure = selectedFigure.duplicateFigure();
                 canvasState.addFigure(newFigure, index);
             }
@@ -261,7 +259,7 @@ public class PaintPane extends BorderPane {
 
         topBar.getAddLayer().setOnAction(event -> {
             canvasState.addLayer();
-            topBar.getLayerButton().getItems().add("Capa " + ++CanvasState.LAYER_COUNT);
+            topBar.getLayerButton().getItems().add("Capa " + CanvasState.LAYER_COUNT);
         });
 
         topBar.getDeleteLayer().setOnAction(event -> {
@@ -271,6 +269,7 @@ public class PaintPane extends BorderPane {
                 alertInfo("Está prohibido eliminar la capa número " + (index + 1) + " por temas gubernamentales");
             } else {
                 canvasState.deleteLayer(index);
+                topBar.getLayerButton().getItems().remove(index);
             }
         });
 

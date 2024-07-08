@@ -45,11 +45,17 @@ public class CanvasState {
     }
 
     public void addLayer() {
-        layerList.add(new Layer("Capa " + (CanvasState.LAYER_COUNT)));
+        layerList.add(new Layer("Capa " + (++CanvasState.LAYER_COUNT)));
     }
 
     public void deleteLayer(int layerIndex) {
         layerList.remove(layerIndex);
+    }
+
+    public void deleteFigure(){
+        for(Layer layer : layerList)
+            layer.removeIf(figure -> figure == selectedFigure);
+        clearSelectedFigure();
     }
 
 //
