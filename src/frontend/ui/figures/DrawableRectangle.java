@@ -3,6 +3,7 @@ package frontend.ui.figures;
 import backend.model.Figure;
 import backend.model.Rectangle;
 import frontend.ui.styles.ShadowEnum;
+import frontend.ui.styles.ShadowHandler;
 import frontend.ui.styles.StrokeStyleEnum;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -12,7 +13,7 @@ import javafx.scene.paint.Stop;
 
 import static frontend.ui.styles.ShadowEnum.*;
 
-public class DrawableRectangle<R extends Rectangle> extends DrawableFigure<R> {
+public class DrawableRectangle<R extends Rectangle> extends DrawableFigure<R> implements ShadowHandler<R> {
 
         public DrawableRectangle(R figure, Color color, Color secondColor, ShadowEnum shadow, Double strokeThickness, StrokeStyleEnum stroke) {
             super(figure, color, secondColor, shadow, strokeThickness,stroke);
@@ -20,43 +21,22 @@ public class DrawableRectangle<R extends Rectangle> extends DrawableFigure<R> {
 
         @Override
         public void handleSelection(GraphicsContext gc) {
-            R rectangle = getFigure();
-            shadowHandler(rectangle, gc);
-            strokeThicknessHandler(gc);
+            applyShadow(getShadow(), getFigure(), gc);
+            applyStrokeThickness(gc);
             strokeStyleHandler(gc);
             super.handleSelection(gc);
         }
 
-        private void shadowHandler(R rectangle, GraphicsContext gc){
-
-//            getShadow().applyShadow(R,)
-            switch (getShadow()) {
-                case SIMPLE -> {
-                    gc.setFill(Color.GRAY);
-                    gc.fillRect(rectangle.getTopLeft().getX() + 10, rectangle.getTopLeft().getY() + 10,
-                            Math.abs(rectangle.getTopLeft().getX() - rectangle.getBottomRight().getX()), Math.abs(rectangle.getTopLeft().getY() - rectangle.getBottomRight().getY()));
-                }
-                case COLORED -> {
-                    gc.setFill(getColor().darker());
-                    gc.fillRect(rectangle.getTopLeft().getX() + 10, rectangle.getTopLeft().getY() + 10,
-                            Math.abs(rectangle.getTopLeft().getX() - rectangle.getBottomRight().getX()), Math.abs(rectangle.getTopLeft().getY() - rectangle.getBottomRight().getY()));
-                }
-                case INVERSE_SIMPLE -> {
-                    gc.setFill(Color.GRAY);
-                    gc.fillRect(rectangle.getTopLeft().getX() - 10, rectangle.getTopLeft().getY() - 10,
-                            Math.abs(rectangle.getTopLeft().getX() - rectangle.getBottomRight().getX()), Math.abs(rectangle.getTopLeft().getY() - rectangle.getBottomRight().getY()));
-                }
-                case INVERSE_COLORED -> {
-                    gc.setFill(getColor().darker());
-                    gc.fillRect(rectangle.getTopLeft().getX() - 10, rectangle.getTopLeft().getY() - 10,
-                            Math.abs(rectangle.getTopLeft().getX() - rectangle.getBottomRight().getX()), Math.abs(rectangle.getTopLeft().getY() - rectangle.getBottomRight().getY()));
-                }
-            }
+        @Override
+        public void applyShadow(ShadowEnum shadow, R rectangle, GraphicsContext gc) {
+            if (shadow == NONE) return;
+            gc.setFill(shadow.isSimple() ? Color.GRAY : getColor().darker());
+            gc.fillRect(rectangle.getTopLeft().getX() + (shadow.isSimple() ? 10 : -10),
+                    rectangle.getTopLeft().getY() + (shadow.isSimple() ? 10 : -10),
+                    Math.abs(rectangle.getTopLeft().getX() - rectangle.getBottomRight().getX()),
+                    Math.abs(rectangle.getTopLeft().getY() - rectangle.getBottomRight().getY()));
         }
 
-        private void strokeThicknessHandler(GraphicsContext gc){
-            gc.setLineWidth(getStrokeThickness());
-        }
 
         // TODO: Change stroke style to an enum
         private void strokeStyleHandler(GraphicsContext gc){

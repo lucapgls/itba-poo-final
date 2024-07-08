@@ -90,6 +90,9 @@ public abstract class DrawableFigure<F extends Figure> {
         getStrokeStyle().applyStrokeStyle(gc);
     }
 
+    public void applyStrokeThickness(GraphicsContext gc) {
+        gc.setLineWidth(strokeThickness);
+    }
 
     public void move(double diffx, double diffy) {
         this.figure.move(diffx, diffy);

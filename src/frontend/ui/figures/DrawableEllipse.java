@@ -3,6 +3,7 @@ package frontend.ui.figures;
 import backend.model.Ellipse;
 import backend.model.Figure;
 import frontend.ui.styles.ShadowEnum;
+import frontend.ui.styles.ShadowHandler;
 import frontend.ui.styles.StrokeStyleEnum;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -13,7 +14,7 @@ import javafx.scene.paint.Stop;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-public class DrawableEllipse<E extends Ellipse> extends DrawableFigure<E> {
+public class DrawableEllipse<E extends Ellipse> extends DrawableFigure<E> implements ShadowHandler<E> {
 
 
     public DrawableEllipse(E figure, Color color, Color secondColor, ShadowEnum shadow, Double strokeThickness, StrokeStyleEnum stroke) { super(figure, color,secondColor ,shadow, strokeThickness, stroke); }
@@ -21,49 +22,19 @@ public class DrawableEllipse<E extends Ellipse> extends DrawableFigure<E> {
     @Override
     public void handleSelection(GraphicsContext gc) {
 
-        E ellipse = getFigure();
-        shadowHandler(ellipse, gc);
-        strokeThicknessHandler(gc);
+        applyShadow(getShadow(), getFigure(), gc);
+        applyStrokeThickness(gc);
         super.handleSelection(gc);
     }
 
-    private void shadowHandler(E ellipse, GraphicsContext gc){
-
-        // TODO Make it more generic with functions
-        switch (getShadow()) {
-            case SIMPLE -> {
-                gc.setFill(Color.GRAY);
-                gc.fillOval(ellipse.getCenter().getX() + 10 - (ellipse.getsMayorAxis() / 2),
-                        ellipse.getCenter().getY() + 10 - (ellipse.getsMinorAxis() / 2),
-                        ellipse.getsMayorAxis(),
-                        ellipse.getsMinorAxis());
-            }
-            case COLORED -> {
-                gc.setFill(getColor().darker());
-                gc.fillOval(ellipse.getCenter().getX() + 10 - (ellipse.getsMayorAxis() / 2),
-                        ellipse.getCenter().getY() + 10 - (ellipse.getsMinorAxis() / 2),
-                        ellipse.getsMayorAxis(),
-                        ellipse.getsMinorAxis());
-            }
-            case INVERSE_SIMPLE -> {
-                gc.setFill(Color.GRAY);
-                gc.fillOval(ellipse.getCenter().getX() - 10 - (ellipse.getsMayorAxis() / 2),
-                        ellipse.getCenter().getY() - 10 - (ellipse.getsMinorAxis() / 2),
-                        ellipse.getsMayorAxis(),
-                        ellipse.getsMinorAxis());
-            }
-            case INVERSE_COLORED -> {
-                gc.setFill(getColor().darker());
-                gc.fillOval(ellipse.getCenter().getX() - 10 - (ellipse.getsMayorAxis() / 2),
-                        ellipse.getCenter().getY() - 10 - (ellipse.getsMinorAxis() / 2),
-                        ellipse.getsMayorAxis(),
-                        ellipse.getsMinorAxis());
-            }
-        }
-    }
-
-    private void strokeThicknessHandler(GraphicsContext gc){
-        gc.setLineWidth(getStrokeThickness());
+    @Override
+    public void applyShadow(ShadowEnum shadow, E ellipse, GraphicsContext gc) {
+        if (shadow == ShadowEnum.NONE) return;
+        gc.setFill(shadow.isSimple() ? Color.GRAY : getColor().darker());
+        gc.fillOval(ellipse.getCenter().getX() + (shadow.isSimple() ? 10 : -10) - (ellipse.getsMayorAxis() / 2),
+                ellipse.getCenter().getY() + (shadow.isSimple() ? 10 : -10) - (ellipse.getsMinorAxis() / 2),
+                ellipse.getsMayorAxis(),
+                ellipse.getsMinorAxis());
     }
 
 
@@ -95,8 +66,6 @@ public class DrawableEllipse<E extends Ellipse> extends DrawableFigure<E> {
         RadialGradient radialGradient = new RadialGradient(0, 0, 0.5, 0.5, 0.5, true,
                 CycleMethod.NO_CYCLE,new Stop(0, getColor()),
                 new Stop(1, getSecondColor()));
-
-
 
         E ellipse = getFigure();
 

@@ -21,4 +21,8 @@ public enum ShadowEnum {
     public String toString() {
         return name;
     }
+
+    public boolean isSimple() {
+        return this == SIMPLE || this == INVERSE_SIMPLE;
+    }
 }

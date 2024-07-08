@@ -50,6 +50,7 @@ public class SideBar extends VBox {
     Label fillLabel = new Label("Relleno");
     Label strokeLabel = new Label("Borde");
     Label actionsLabel = new Label("Acciones");
+
     public SideBar(CanvasState canvasState) {
             super(10);
             this.canvasState = canvasState;
