@@ -15,7 +15,7 @@ import java.util.List;
 public class CanvasState {
 
 
-    // TODO remove selected
+    public static int LAYER_COUNT = 3;
 
 
     private final List<DrawableFigure<? extends Figure>> list = new ArrayList<>();
@@ -24,8 +24,8 @@ public class CanvasState {
 
     private DrawableFigure<? extends Figure> selectedFigure = null;
 
-    public void addFigure(DrawableFigure figure, int layer) {
-        layerList.get(layer).add(figure);
+    public void addFigure(DrawableFigure figure, int layerIndex) {
+        layerList.get(layerIndex).add(figure);
     }
 
 
@@ -46,6 +46,10 @@ public class CanvasState {
 
     public void addLayer() {
         layerList.add(new Layer("Capa " + (CanvasState.LAYER_COUNT)));
+    }
+
+    public void deleteLayer(int layerIndex) {
+        layerList.remove(layerIndex);
     }
 
 
@@ -137,17 +141,6 @@ public class CanvasState {
         return layerList;
     }
 
-    public void updateLayerVisibility(String name) {
-        for(Layer layer : layerList){
-            if(layer.name.equals(name)){
-                if(layer.isShown()){
-                    layer.hide();
-                }else{
-                    layer.show();
-                }
-            }
-        }
-    }
 
 
 

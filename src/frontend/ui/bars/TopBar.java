@@ -50,6 +50,7 @@ public class TopBar extends HBox {
         getChildren().add(hideLayer);
         hideLayer.setStyle("-fx-text-fill: white");
         setAlignment(Pos.CENTER);
+        HBox.setMargin(hideLayer, new Insets(0, 15, 0, 0));
 
         getChildren().add(addLayer);
         addLayer.setStyle("-fx-text-fill: black");
