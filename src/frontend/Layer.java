@@ -27,4 +27,8 @@ public class Layer extends ArrayList<DrawableFigure<? extends Figure>> {
         return this.showLayer;
     }
 
+    public String getName(){
+        return name;
+    }
+
 }

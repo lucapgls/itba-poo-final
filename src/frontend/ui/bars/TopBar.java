@@ -5,6 +5,7 @@ import frontend.Layer;
 import frontend.ui.buttons.LayerButton;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -18,7 +19,11 @@ public class TopBar extends HBox {
     private final CanvasState canvasState;
 
     private final ChoiceBox<String> layerChoiceBox;
+    private final Button addLayer = new Button("Agregar Capa");
+    private final Button deleteLayer = new Button("Eliminar Capa");
 
+
+    private int layerCount = 3;
     private final RadioButton showLayer = new RadioButton("Mostrar");
     private final RadioButton hideLayer = new RadioButton("Ocultar");
     Label layersLabel = new Label("Capas");
@@ -46,9 +51,22 @@ public class TopBar extends HBox {
         hideLayer.setStyle("-fx-text-fill: white");
         setAlignment(Pos.CENTER);
 
-        canvasState.getLayerList().add(new Layer("Capa 1"));
-        canvasState.getLayerList().add(new Layer("Capa 2"));
-        canvasState.getLayerList().add(new Layer("Capa 3"));
+        getChildren().add(addLayer);
+        addLayer.setStyle("-fx-text-fill: black");
+        HBox.setMargin(addLayer, new Insets(0, 15, 0, 0));
+
+        getChildren().add(deleteLayer);
+        deleteLayer.setStyle("-fx-text-fill: black");
+        HBox.setMargin(deleteLayer, new Insets(0, 15, 0, 0));
+
+
+
+
+        for(int i = 1; i <= layerCount; i++){
+            Layer newLayer = new Layer("Capa " + (i));
+            canvasState.getLayerList().add(newLayer);
+            System.out.println(canvasState.getLayerList().size());
+        }
 
         // Use get(0) instead of getFirst()
         showLayer.setSelected(canvasState.getLayerList().getFirst().isShown());
@@ -66,10 +84,19 @@ public class TopBar extends HBox {
         return hideLayer;
     }
 
+    public Button getAddLayer() {
+        return addLayer;
+    }
+
+    public Button getDeleteLayer(){
+        return deleteLayer;
+    }
+
     public void setRadioButtons(boolean show) {
         showLayer.setSelected(show);
         hideLayer.setSelected(!show);
     }
+
 
 
     public void HideLayer() {

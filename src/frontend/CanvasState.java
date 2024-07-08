@@ -44,8 +44,8 @@ public class CanvasState {
         return selectedFigure;
     }
 
-    public void addLayer(Layer layer) {
-        layerList.add(layer);
+    public void addLayer() {
+        layerList.add(new Layer("Capa " + (CanvasState.LAYER_COUNT)));
     }
 
 

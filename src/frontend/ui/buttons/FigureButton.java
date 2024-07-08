@@ -34,7 +34,6 @@ public class FigureButton<F extends Figure> extends ActionButton {
     @Override
     public void onMouseReleased(Point end) {
 //        figure.update(start, end);
-        System.out.println(layer);
         canvasState.clearSelectedFigure();
         DrawableFigure<F> drawableFigure = factory.create(start, end);
         canvasState.addFigure(drawableFigure, layer);

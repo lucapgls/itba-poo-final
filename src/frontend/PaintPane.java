@@ -16,6 +16,8 @@ import java.util.regex.Pattern;
 
 public class PaintPane extends BorderPane {
 
+    private final static int MIN_LAYERS = 3;
+
     // BackEnd
     private final CanvasState canvasState;
 
@@ -240,7 +242,7 @@ public class PaintPane extends BorderPane {
             String name = topBar.getLayerButton().getValue(); // Assuming getValue() returns a string like "Capa 2"
             int num = getLayerByName(name); // Assuming getLayerByName() returns the number of the layer (2 in this case
 
-            sideBar.setLayer(num);
+            sideBar.setLayer(index);
 
             topBar.setRadioButtons(canvasState.getLayerList().get(num).isShown());
 
@@ -257,6 +259,20 @@ public class PaintPane extends BorderPane {
             redrawCanvas();
         });
 
+        topBar.getAddLayer().setOnAction(event -> {
+            canvasState.addLayer();
+            topBar.getLayerButton().getItems().add("Capa " + ++CanvasState.LAYER_COUNT);
+        });
+
+        topBar.getDeleteLayer().setOnAction(event -> {
+            String name = topBar.getLayerButton().getValue();
+            int index = getLayerIndexByName(name);
+            if( index < MIN_LAYERS) {
+            alertInfo("Está prohibido eliminar la capa número " + (index+1) + " por temas gubernamentales");
+            }else {
+                canvasState.deleteLayer(index);
+            }
+        });
 
         setTop(topBar);
         setLeft(sideBar);
