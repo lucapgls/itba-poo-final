@@ -23,7 +23,6 @@ public class DrawableRectangle<R extends Rectangle> extends DrawableFigure<R> im
         public void handleSelection(GraphicsContext gc) {
             applyShadow(getShadow(), getFigure(), gc);
             applyStrokeThickness(gc);
-            strokeStyleHandler(gc);
             super.handleSelection(gc);
         }
 
@@ -37,11 +36,6 @@ public class DrawableRectangle<R extends Rectangle> extends DrawableFigure<R> im
                     Math.abs(rectangle.getTopLeft().getY() - rectangle.getBottomRight().getY()));
         }
 
-
-        // TODO: Change stroke style to an enum
-        private void strokeStyleHandler(GraphicsContext gc){
-
-        }
 
         @Override
         public DrawableFigure<? extends Figure> duplicateFigure(){
