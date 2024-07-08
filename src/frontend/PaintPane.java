@@ -105,9 +105,6 @@ public class PaintPane extends BorderPane {
         canvas.setOnMouseClicked(event -> {
 
             Point eventPoint = new Point(event.getX(), event.getY());
-            //boolean found = false;
-            //StringBuilder label = new StringBuilder("Se seleccionó: ");
-
             // Clicked but moved
             if (startPoint.getX() != eventPoint.getX() && startPoint.getY() != eventPoint.getY()) {
                 return;
@@ -127,12 +124,6 @@ public class PaintPane extends BorderPane {
 
             }
 
-//            if (found) {
-//                statusPane.updateStatus(label.toString());
-//            } else {
-//                selectedFigure = null;
-//                statusPane.updateStatus("Ninguna figura encontrada");
-//            }
             redrawCanvas();
 
         });
@@ -163,7 +154,7 @@ public class PaintPane extends BorderPane {
 
             DrawableFigure<? extends Figure> selectedFigure = canvasState.getSelectedFigure();
             if (selectedFigure != null) {
-                String name = topBar.getLayerButton().getValue(); // Assuming getValue() returns a string like "Capa 2"
+                String name = topBar.getLayerButton().getValue();
                 int index = getLayerIndexByName(name);
                 DrawableFigure<? extends Figure> newFigure = selectedFigure.duplicateFigure();
                 canvasState.addFigure(newFigure, index);
@@ -177,7 +168,7 @@ public class PaintPane extends BorderPane {
 
             DrawableFigure<? extends Figure> selectedFigure = canvasState.getSelectedFigure();
             if (selectedFigure != null) {
-                String name = topBar.getLayerButton().getValue(); // Assuming getValue() returns a string like "Capa 2"
+                String name = topBar.getLayerButton().getValue();
                 int num = getLayerIndexByName(name);
                 DrawableFigure<? extends Figure>[] newFigures = selectedFigure.divideFigure();
                 canvasState.addFigure(newFigures[0], num);
@@ -199,7 +190,7 @@ public class PaintPane extends BorderPane {
         });
 
         sideBar.getColorPickerButton().setOnAction(event -> {
-            String name = topBar.getLayerButton().getValue(); // Assuming getValue() returns a string like "Capa 2"
+            String name = topBar.getLayerButton().getValue();
             int num = getLayerIndexByName(name);
             canvasState.updateSelectedFigure(sideBar.getColorPicker(), num, true);
             redrawCanvas();
@@ -213,9 +204,7 @@ public class PaintPane extends BorderPane {
         });
 
         sideBar.getShadowButton().setOnAction(event -> {
-            String name = topBar.getLayerButton().getValue(); // Assuming getValue() returns a string like "Capa 2"
-            int num = getLayerIndexByName(name);
-            canvasState.updateShadow(sideBar.getShadowButton().getValue(), num);
+            canvasState.updateShadow(sideBar.getShadowButton().getValue());
             redrawCanvas();
         });
 
