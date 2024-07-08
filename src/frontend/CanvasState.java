@@ -111,24 +111,24 @@ public class CanvasState {
     }
 
 
-    public void updateShadow(ShadowEnum shadow, int layer) {
-        for (DrawableFigure<? extends Figure> figure : getLayerList().get(layer)) {
+    public void updateShadow(ShadowEnum shadow) {
+        for (DrawableFigure<? extends Figure> figure : figures()) {
             if (selectedFigure == figure) {
                 figure.updateShadow(shadow);
             }
         }
     }
 
-    public void updateStrokeStyle(StrokeStyleEnum strokeStyle, int layer) {
-        for (DrawableFigure<? extends Figure> figure : getLayerList().get(layer)) {
+    public void updateStrokeStyle(StrokeStyleEnum strokeStyle) {
+        for (DrawableFigure<? extends Figure> figure : figures()) {
             if (selectedFigure == figure) {
                 figure.updateStrokeStyle(strokeStyle);
             }
         }
     }
 
-    public void updateStrokeThickness(Double thickness, int layer) {
-        for (DrawableFigure<? extends Figure> figure : getLayerList().get(layer)) {
+    public void updateStrokeThickness(Double thickness) {
+        for (DrawableFigure<? extends Figure> figure : figures()) {
             if (selectedFigure == figure) {
                 figure.updateStrokeThickness(thickness);
             }

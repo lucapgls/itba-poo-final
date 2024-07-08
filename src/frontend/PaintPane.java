@@ -220,16 +220,12 @@ public class PaintPane extends BorderPane {
         });
 
         sideBar.getStrokeStyleButton().setOnAction(event -> {
-            String name = topBar.getLayerButton().getValue(); // Assuming getValue() returns a string like "Capa 2"
-            int num = getLayerIndexByName(name);
-            canvasState.updateStrokeStyle(sideBar.getStrokeStyleButton().getValue(), num);
+            canvasState.updateStrokeStyle(sideBar.getStrokeStyleButton().getValue());
             redrawCanvas();
         });
 
         sideBar.getStrokeSlider().setOnMouseReleased(event -> {
-            String name = topBar.getLayerButton().getValue(); // Assuming getValue() returns a string like "Capa 2"
-            int num = getLayerIndexByName(name);
-            canvasState.updateStrokeThickness(sideBar.getStrokeSlider().getValue(), num);
+            canvasState.updateStrokeThickness(sideBar.getStrokeSlider().getValue());
             redrawCanvas();
         });
 
