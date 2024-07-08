@@ -31,8 +31,8 @@ public class DrawableEllipse<E extends Ellipse> extends DrawableFigure<E> implem
     public void applyShadow(ShadowEnum shadow, E ellipse, GraphicsContext gc) {
         if (shadow == ShadowEnum.NONE) return;
         gc.setFill(shadow.isSimple() ? Color.GRAY : getColor().darker());
-        gc.fillOval(ellipse.getCenter().getX() + (shadow.isSimple() ? 10 : -10) - (ellipse.getsMayorAxis() / 2),
-                ellipse.getCenter().getY() + (shadow.isSimple() ? 10 : -10) - (ellipse.getsMinorAxis() / 2),
+        gc.fillOval(ellipse.getCenter().getX() + (shadow.isInversed() ? -10 : 10) - (ellipse.getsMayorAxis() / 2),
+                ellipse.getCenter().getY() + (shadow.isInversed() ? -10 : 10) - (ellipse.getsMinorAxis() / 2),
                 ellipse.getsMayorAxis(),
                 ellipse.getsMinorAxis());
     }

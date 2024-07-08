@@ -31,8 +31,8 @@ public class DrawableRectangle<R extends Rectangle> extends DrawableFigure<R> im
         public void applyShadow(ShadowEnum shadow, R rectangle, GraphicsContext gc) {
             if (shadow == NONE) return;
             gc.setFill(shadow.isSimple() ? Color.GRAY : getColor().darker());
-            gc.fillRect(rectangle.getTopLeft().getX() + (shadow.isSimple() ? 10 : -10),
-                    rectangle.getTopLeft().getY() + (shadow.isSimple() ? 10 : -10),
+            gc.fillRect(rectangle.getTopLeft().getX() + (shadow.isInversed() ? -10 : 10),
+                    rectangle.getTopLeft().getY() + (shadow.isInversed() ? -10 : 10),
                     Math.abs(rectangle.getTopLeft().getX() - rectangle.getBottomRight().getX()),
                     Math.abs(rectangle.getTopLeft().getY() - rectangle.getBottomRight().getY()));
         }

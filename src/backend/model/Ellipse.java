@@ -9,8 +9,8 @@ public class Ellipse extends Figure {
     public Ellipse(Point centerPoint, double sMayorAxis, double sMinorAxis) {
         super(new Point[]{centerPoint});
         this.centerPoint = centerPoint;
-        this.sMayorAxis = sMayorAxis;
-        this.sMinorAxis = sMinorAxis;
+        this.sMayorAxis = Math.abs(sMayorAxis);
+        this.sMinorAxis = Math.abs(sMinorAxis);
     }
 
     @Override

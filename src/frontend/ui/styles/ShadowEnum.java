@@ -25,4 +25,8 @@ public enum ShadowEnum {
     public boolean isSimple() {
         return this == SIMPLE || this == INVERSE_SIMPLE;
     }
+
+    public boolean isInversed() {
+        return this == INVERSE_SIMPLE || this == INVERSE_COLORED;
+    }
 }

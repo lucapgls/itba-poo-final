@@ -115,11 +115,16 @@ public class SideBar extends VBox {
         return new ToggleButton[]{duplicateButton, divideButton, centerButton};
     }
 
+
     private ToggleButton[] getToggleButtons(CanvasState canvasState) {
+        // Rectangle button
         FigureButton<Rectangle> rectangleButton = new FigureButton<>("Rectángulo", canvasState, currentLayer,
-                (start, end) -> new DrawableRectangle<>(new Rectangle(start, end),fillColorPicker.getValue(), secondaryColorPicker.getValue(), shadowButton.getValue(), strokeSlider.getValue(), strokeStyleButton.getValue())
+                (start, end) -> new DrawableRectangle<>(new Rectangle(
+                        start,
+                        end),fillColorPicker.getValue(), secondaryColorPicker.getValue(), shadowButton.getValue(), strokeSlider.getValue(), strokeStyleButton.getValue())
         );
 
+        // Ellipse button
         FigureButton<Ellipse> ellipseButton = new FigureButton<>("Elipse", canvasState, currentLayer,
                 (start, end) -> new DrawableEllipse<>(new Ellipse(
                     new Point(Math.abs(end.getX() + start.getX()) / 2, (Math.abs((end.getY() + start.getY())) / 2)),
@@ -127,11 +132,13 @@ public class SideBar extends VBox {
                     Math.abs(end.getY() - start.getY())), fillColorPicker.getValue(), secondaryColorPicker.getValue(), shadowButton.getValue(), strokeSlider.getValue(), strokeStyleButton.getValue())
         );
 
+        // Square button
         FigureButton<Square> squareButton = new FigureButton<>("Cuadrado", canvasState, currentLayer,
                 (start, end) -> new DrawableRectangle<>(new Square(start, end.getX() - start.getX()),
                 fillColorPicker.getValue(), secondaryColorPicker.getValue(), shadowButton.getValue(), strokeSlider.getValue(), strokeStyleButton.getValue())
         );
 
+        // Circle button
         FigureButton<Circle> circleButton = new FigureButton<>("Círculo", canvasState, currentLayer,
                 (start, end) -> new DrawableEllipse<>(new Circle(start, end.getX() - start.getX()),
                         fillColorPicker.getValue(), secondaryColorPicker.getValue(), shadowButton.getValue(), strokeSlider.getValue(), strokeStyleButton.getValue())

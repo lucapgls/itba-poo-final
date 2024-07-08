@@ -4,11 +4,20 @@ public class Rectangle extends Figure {
 
     private Point topLeft, bottomRight;
 
-    public Rectangle(Point topLeft, Point bottomRight) {
-        super(new Point[]{topLeft, bottomRight});
-        this.topLeft = topLeft;
-        this.bottomRight = bottomRight;
+    public Rectangle(Point firstPoint, Point secondPoint) {
+        super(new Point[]{firstPoint, secondPoint});
+
+        // Conseguimos que topLeft sea el punto superior izquierdo y
+        // bottomRight el inferior derecho
+        double minX = Math.min(firstPoint.getX(), secondPoint.getX());
+        double maxX = Math.max(firstPoint.getX(), secondPoint.getX());
+        double minY = Math.min(firstPoint.getY(), secondPoint.getY());
+        double maxY = Math.max(firstPoint.getY(), secondPoint.getY());
+
+        this.topLeft = new Point(minX, minY);
+        this.bottomRight = new Point(maxX, maxY);
     }
+
 
     public Point getTopLeft() {
         return topLeft;
@@ -17,7 +26,6 @@ public class Rectangle extends Figure {
     public Point getBottomRight() {
         return bottomRight;
     }
-
 
     @Override
     public Point getCenter(){

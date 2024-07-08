@@ -66,9 +66,9 @@ public class PaintPane extends BorderPane {
             if (startPoint == null) {
                 return;
             }
-            if (endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY()) {
-                return;
-            }
+//            if (endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY()) {
+//                return;
+//            }
 
             ActionButton button = (ActionButton) sideBar.getTools().getSelectedToggle();
             if (button != null) {
