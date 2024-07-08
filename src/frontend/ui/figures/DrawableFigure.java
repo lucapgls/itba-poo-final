@@ -101,6 +101,7 @@ public abstract class DrawableFigure<F extends Figure> {
     public abstract void draw(GraphicsContext gc);
 
     // Actions
+    // TODO Use factory to replace the child method calls with a factory method
     public abstract DrawableFigure<? extends Figure> duplicateFigure();
 
     public abstract DrawableFigure<? extends Figure>[] divideFigure();

@@ -58,21 +58,6 @@ public class CanvasState {
         clearSelectedFigure();
     }
 
-//
-//    public void deleteFigure(int index) {
-//        for (DrawableFigure<? extends Figure> figure : figures()) {
-//            if (figure == selectedFigure) {
-//
-//                for(Layer layer : layerList){
-//                    layer.remove(figure);
-//                }
-//                clearSelectedFigure();
-//                return;
-//            }
-//        }
-//        clearSelectedFigure();
-//    }
-
     public void addSelectedFigure(DrawableFigure<? extends Figure> figure) {
         selectedFigure = figure;
     }
@@ -98,11 +83,7 @@ public class CanvasState {
     }
 
     public boolean figureBelongs(DrawableFigure<? extends Figure> figure, Point eventPoint) {
-        // temp
-        if (figure.getFigure() == null)
-            return false;
-        else
-            return figure.getFigure().isReachable(eventPoint);
+        return figure != null && figure.getFigure().isReachable(eventPoint);
     }
 
 

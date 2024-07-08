@@ -29,6 +29,7 @@ public class TopBar extends HBox {
     Label layersLabel = new Label("Capas");
 
 
+    // TODO initializeWithStyle
     public TopBar(CanvasState canvasState) {
         this.canvasState = canvasState;
         layerChoiceBox = new LayerButton(3);

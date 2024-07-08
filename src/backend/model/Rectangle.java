@@ -68,8 +68,8 @@ public class Rectangle extends Figure {
     }
 
     public Rectangle[] divide(){
-        //primero divido este rectangulo y dsp devuelvo el nuevo
-       double newTopLeftX = topLeft.getX() + (bottomRight.getX() - topLeft.getX())/2;
+        // Obtengo ambos puntos medios en funcion de como esta dada la consiga del TP
+        double newTopLeftX = topLeft.getX() + (bottomRight.getX() - topLeft.getX())/2;
         double newTopLeftY = topLeft.getY() - (topLeft.getY() - bottomRight.getY())/4;
         double newBottomRightX = bottomRight.getX() - (bottomRight.getX() - topLeft.getX())/2;
         double newBottomRightY = bottomRight.getY() + (topLeft.getY() - bottomRight.getY())/4;
@@ -82,7 +82,6 @@ public class Rectangle extends Figure {
 
     @Override
     public void move(double diffX, double diffY) {
-//        super.move(diffX, diffY);
         topLeft.move(diffX, diffY);
         bottomRight.move(diffX, diffY);
     }
