@@ -248,12 +248,12 @@ public class PaintPane extends BorderPane {
         });
 
         topBar.getShowLayer().setOnAction(event -> {
-            topBar.ShowLayer();
+            topBar.toggleLayer(topBar.getShowLayer(), topBar.getHideLayer());
             redrawCanvas();
         });
 
         topBar.getHideLayer().setOnAction(event -> {
-            topBar.HideLayer();
+            topBar.toggleLayer(topBar.getHideLayer(), topBar.getShowLayer());
             redrawCanvas();
         });
 

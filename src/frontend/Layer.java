@@ -31,4 +31,12 @@ public class Layer extends ArrayList<DrawableFigure<? extends Figure>> {
         return name;
     }
 
+    public void toggleOnLayer() {
+        if (isShown()) {
+            hide();
+        } else {
+            show();
+        }
+    }
+
 }

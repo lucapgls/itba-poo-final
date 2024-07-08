@@ -63,6 +63,7 @@ public class TopBar extends HBox {
 
 
 
+        // Iniciales
         for(int i = 1; i <= layerCount; i++){
             Layer newLayer = new Layer("Capa " + (i));
             canvasState.getLayerList().add(newLayer);
@@ -70,7 +71,7 @@ public class TopBar extends HBox {
             System.out.println(canvasState.getLayerList().size());
         }
 
-        // Use get(0) instead of getFirst()
+        // Boton de showLayer debe empezar seleccionado para layer1
         showLayer.setSelected(canvasState.getLayerList().getFirst().isShown());
     }
 
@@ -112,4 +113,5 @@ public class TopBar extends HBox {
 
         layer.toggleOnLayer();
     }
+}
 
