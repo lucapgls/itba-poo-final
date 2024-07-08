@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Layer extends ArrayList<DrawableFigure<? extends Figure>> {
 
     private boolean showLayer = true;
-    String name;
+    private final String name;
 
     public Layer(String name) {
         this.name = name;

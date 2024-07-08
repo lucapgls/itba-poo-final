@@ -66,6 +66,7 @@ public class TopBar extends HBox {
         for(int i = 1; i <= layerCount; i++){
             Layer newLayer = new Layer("Capa " + (i));
             canvasState.getLayerList().add(newLayer);
+
             System.out.println(canvasState.getLayerList().size());
         }
 
@@ -98,41 +99,17 @@ public class TopBar extends HBox {
         hideLayer.setSelected(!show);
     }
 
-
-
-    public void HideLayer() {
-        showLayer.setSelected(!showLayer.isSelected());
-        String name = getLayerButton().getValue(); // Assuming getValue() returns a string like "Capa 2"
-        int num = getLayerByName(name);
-
-        if(hideLayer.isSelected())
-        canvasState.getLayerList().get(num-1).hide();
-        else if(!hideLayer.isSelected())
-        canvasState.getLayerList().get(num-1).show();
-
-    }
-
-    public void ShowLayer() {
-        hideLayer.setSelected(!showLayer.isSelected());
-        String name = getLayerButton().getValue(); // Assuming getValue() returns a string like "Capa 2"
-        int num = getLayerByName(name);
-
-        if(showLayer.isSelected())
-        canvasState.getLayerList().get(num-1).show();
-        else if(!showLayer.isSelected())
-        canvasState.getLayerList().get(num-1).hide();
-
-    }
-
-    private int getLayerByName(String name){
-        Pattern pattern = Pattern.compile("\\d+"); // Regular expression to find numbers
-        Matcher matcher = pattern.matcher(name);
-
-        int num = 0;
-        if (matcher.find()) {
-            num = Integer.parseInt(matcher.group()); // Convert the first occurrence of number string to integer
+    public void toggleLayer(RadioButton button, RadioButton other) {
+        if (other != null && button != null) {
+            button.setSelected(button.isSelected());
+            other.setSelected(!button.isSelected());
         }
-        return num;
+
+        String name = getLayerButton().getValue();
+        int idx = canvasState.getLayerIndexByName(name);
+
+        Layer layer = canvasState.getLayerList().get(idx);
+
+        layer.toggleOnLayer();
     }
 
-}

@@ -200,7 +200,7 @@ public class SideBar extends VBox {
     }
 
     public void setLayer(int layer){
-        System.out.println(layer);
+//        System.out.println(layer + "setlayerindex");
         this.currentLayer = layer;
         squareButton.setLayer(layer);
         rectangleButton.setLayer(layer);

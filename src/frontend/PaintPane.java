@@ -168,7 +168,7 @@ public class PaintPane extends BorderPane {
                 String name = topBar.getLayerButton().getValue(); // Assuming getValue() returns a string like "Capa 2"
                 int num = getLayerIndexByName(name);
                 DrawableFigure<? extends Figure> newFigure = selectedFigure.duplicateFigure();
-                canvasState.addFigure(newFigure, num -1);
+                canvasState.addFigure(newFigure, index);
             }
             redrawCanvas();
         });
@@ -182,9 +182,9 @@ public class PaintPane extends BorderPane {
                 String name = topBar.getLayerButton().getValue(); // Assuming getValue() returns a string like "Capa 2"
                 int num = getLayerIndexByName(name);
                 DrawableFigure<? extends Figure>[] newFigures = selectedFigure.divideFigure();
-                  canvasState.addFigure(newFigures[0], num);
-                  canvasState.addFigure(newFigures[1], num);
-                canvasState.deleteFigure(num);
+                canvasState.addFigure(newFigures[0], num);
+                canvasState.addFigure(newFigures[1], num);
+                canvasState.deleteFigure();
             }
             redrawCanvas();
         });
@@ -235,10 +235,12 @@ public class PaintPane extends BorderPane {
             redrawCanvas();
         });
 
+
         topBar.getLayerButton().setOnAction(event -> {
             String name = topBar.getLayerButton().getValue();
 
             int index = getLayerIndexByName(name);
+            System.out.println(index + "getlayerindex");
 
             sideBar.setLayer(index);
 
@@ -265,9 +267,9 @@ public class PaintPane extends BorderPane {
         topBar.getDeleteLayer().setOnAction(event -> {
             String name = topBar.getLayerButton().getValue();
             int index = getLayerIndexByName(name);
-            if( index < MIN_LAYERS) {
-            alertInfo("Está prohibido eliminar la capa número " + (index+1) + " por temas gubernamentales");
-            }else {
+            if (index < MIN_LAYERS) {
+                alertInfo("Está prohibido eliminar la capa número " + (index + 1) + " por temas gubernamentales");
+            } else {
                 canvasState.deleteLayer(index);
             }
         });
@@ -304,15 +306,19 @@ public class PaintPane extends BorderPane {
         alert.showAndWait();
     }
 
-    private int getLayerIndexByName(String name){
-       int index= 0;
-        for (Layer layer : canvasState.getLayerList()) {
-            if (layer.getName().equals(name)){
-                index= canvasState.getLayerList().indexOf(layer);
+    private int getLayerIndexByName(String name) {
+
+        for (int i = 0; i < canvasState.getLayerList().size(); i++) {
+            System.out.println(name);
+            Layer layer = canvasState.getLayerList().get(i);
+
+            if (layer.getName().equals(name)) {
+                return i;
             }
         }
 
-        return index;
+        // No se encontro layer, fallbackea a la layer 0
+        return 0;
     }
 
 

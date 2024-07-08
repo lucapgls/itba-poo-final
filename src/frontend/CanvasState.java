@@ -52,18 +52,20 @@ public class CanvasState {
         layerList.remove(layerIndex);
     }
 
-
-    public void deleteFigure(int index) {
-        Layer layer = layerList.get(index);
-        Iterator<DrawableFigure<? extends Figure>> iterator = layer.iterator();
-        while (iterator.hasNext()) {
-            DrawableFigure<? extends Figure> figure = iterator.next();
-            if (selectedFigure == figure) {
-                iterator.remove();
-            }
-        }
-        clearSelectedFigure();
-    }
+//
+//    public void deleteFigure(int index) {
+//        for (DrawableFigure<? extends Figure> figure : figures()) {
+//            if (figure == selectedFigure) {
+//
+//                for(Layer layer : layerList){
+//                    layer.remove(figure);
+//                }
+//                clearSelectedFigure();
+//                return;
+//            }
+//        }
+//        clearSelectedFigure();
+//    }
 
     public void addSelectedFigure(DrawableFigure<? extends Figure> figure) {
         selectedFigure = figure;
@@ -141,6 +143,20 @@ public class CanvasState {
         return layerList;
     }
 
+    public int getLayerIndexByName(String name) {
+
+        for (int i = 0; i < getLayerList().size(); i++) {
+            System.out.println(name);
+            Layer layer = getLayerList().get(i);
+
+            if (layer.getName().equals(name)) {
+                return i;
+            }
+        }
+
+        // No se encontro layer, fallbackea a la layer 0
+        return 0;
+    }
 
 
 
