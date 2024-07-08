@@ -2,7 +2,7 @@ package backend.model;
 
 public abstract class Figure implements Movable, Reachable {
 
-    private Point[] points;
+    private final Point[] points;
 
     public Figure(Point[] points) {
         this.points = points;
@@ -13,13 +13,6 @@ public abstract class Figure implements Movable, Reachable {
         // figure tiene lista de points
         for (Point p : points) {
             p.move(diffX, diffY);
-        }
-    }
-
-    public void setPosition(double x, double y) {
-        for (Point p : points) {
-            p.setX(x);
-            p.setY(y);
         }
     }
 

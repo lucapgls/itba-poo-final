@@ -131,11 +131,20 @@ public class PaintPane extends BorderPane {
         canvas.setOnMouseDragged(event -> {
             Point eventPoint = new Point(event.getX(), event.getY());
 
+            // Si no hubo punto de inicio no se mueve
+            if (startPoint == null) {
+                return;
+            }
+
+            double diffX = eventPoint.getX() - startPoint.getX();
+            double diffY = eventPoint.getY() - startPoint.getY();
+
             ActionButton button = (ActionButton) sideBar.getTools().getSelectedToggle();
             if (button != null) {
                 button.onMouseDragged(eventPoint);
                 if (canvasState.getSelectedFigure() != null) {
-                    canvasState.getSelectedFigure().move(eventPoint.getX() - startPoint.getX(), eventPoint.getY() - startPoint.getY());
+                    canvasState.getSelectedFigure().move(diffX, diffY);
+                    startPoint = eventPoint;
                 }
             }
             redrawCanvas();

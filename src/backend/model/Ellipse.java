@@ -69,7 +69,8 @@ public class Ellipse extends Figure {
 
     @Override
     public void center(double maxWidth, double maxHeight) {
-        setPosition(maxWidth*0.5 ,maxHeight*0.5);
+        centerPoint.setX(maxWidth*0.5);
+        centerPoint.setY(maxHeight*0.5);
     }
 
 

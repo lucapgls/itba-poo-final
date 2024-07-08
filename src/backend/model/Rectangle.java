@@ -74,7 +74,7 @@ public class Rectangle extends Figure {
 
     @Override
     public void move(double diffX, double diffY) {
-        super.move(diffX, diffY);
+//        super.move(diffX, diffY);
         topLeft.move(diffX, diffY);
         bottomRight.move(diffX, diffY);
     }
