@@ -119,9 +119,13 @@ public class SideBar extends VBox {
     private ToggleButton[] getToggleButtons(CanvasState canvasState) {
         // Rectangle button
         FigureButton<Rectangle> rectangleButton = new FigureButton<>("Rectángulo", canvasState, currentLayer,
-                (start, end) -> new DrawableRectangle<>(new Rectangle(
-                        start,
-                        end),fillColorPicker.getValue(), secondaryColorPicker.getValue(), shadowButton.getValue(), strokeSlider.getValue(), strokeStyleButton.getValue())
+                (start, end) -> new DrawableRectangle<>(
+                        new Rectangle(start, end),
+                        fillColorPicker.getValue(),
+                        secondaryColorPicker.getValue(),
+                        shadowButton.getValue(),
+                        strokeSlider.getValue(),
+                        strokeStyleButton.getValue())
         );
 
         // Ellipse button

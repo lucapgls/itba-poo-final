@@ -98,12 +98,14 @@ public abstract class DrawableFigure<F extends Figure> {
         this.figure.move(diffx, diffy);
     }
 
+    public abstract void draw(GraphicsContext gc);
+
+    // Actions
     public abstract DrawableFigure<? extends Figure> duplicateFigure();
 
     public abstract DrawableFigure<? extends Figure>[] divideFigure();
 
     public abstract void centerFigure(double maxWidth, double maxHeight);
 
-    public abstract void draw(GraphicsContext gc);
 
 }

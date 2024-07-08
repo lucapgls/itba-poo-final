@@ -8,4 +8,6 @@ public interface FigureFactory<F extends Figure> {
 
     DrawableFigure<F> create(Point start, Point end);
 
+
+
 }
