@@ -197,7 +197,7 @@ public class PaintPane extends BorderPane {
         });
 
         sideBar.getSecondaryColorPickerButton().setOnAction(event -> {
-            String name = topBar.getLayerButton().getValue(); // Assuming getValue() returns a string like "Capa 2"
+            String name = topBar.getLayerButton().getValue();
             int num = getLayerIndexByName(name);
             canvasState.updateSelectedFigure(sideBar.getSecondaryColorPicker(), num, false);
             redrawCanvas();
@@ -255,7 +255,9 @@ public class PaintPane extends BorderPane {
             } else {
                 canvasState.deleteLayer(index);
                 topBar.getLayerButton().getItems().remove(index);
+                topBar.getLayerButton().setValue(topBar.getLayerButton().getItems().getFirst());
             }
+            redrawCanvas();
         });
 
         setTop(topBar);
