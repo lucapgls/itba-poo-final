@@ -1,5 +1,1 @@
-Trabajo Final programacion orientada a objetos
-Integrantes:
-Luca Pugliese
-Uriel Sosa Vazquez
-Felipe Ezequiel Venturino
+72.08 Arquitectura de Computadoras - TPE
